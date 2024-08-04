@@ -1,4 +1,26 @@
 document.addEventListener('DOMContentLoaded', () => {
+    const fromSelect = document.getElementById('from');
+    const toSelect = document.getElementById('to');
+
+    // Fetch cities from the backend
+    fetch('/api/cities')
+        .then(response => response.json())
+        .then(cities => {
+            cities.forEach(city => {
+                const optionFrom = document.createElement('option');
+                optionFrom.value = city;
+                optionFrom.textContent = city;
+                fromSelect.appendChild(optionFrom);
+
+                const optionTo = document.createElement('option');
+                optionTo.value = city;
+                optionTo.textContent = city;
+                toSelect.appendChild(optionTo);
+            });
+        })
+        .catch(error => console.error('Error fetching cities:', error));
+
+
     const loginForm = document.getElementById('login-form');
     const signupForm = document.getElementById('signup-form');
     const searchForm = document.getElementById('search-form');
@@ -6,16 +28,62 @@ document.addEventListener('DOMContentLoaded', () => {
     loginForm.addEventListener('submit', handleLogin);
     signupForm.addEventListener('submit', handleSignup);
     searchForm.addEventListener('submit', handleSearch);
+
+    // Navbar toggle functionality
+    const overlay = document.querySelector("[data-overlay]");
+    const navOpenBtn = document.querySelector("[data-nav-open-btn]");
+    const navbar = document.querySelector("[data-navbar]");
+    const navCloseBtn = document.querySelector("[data-nav-close-btn]");
+    const navLinks = document.querySelectorAll("[data-nav-link]");
   
-    // Fetch and display featured deals
-    fetchFeaturedDeals();
-  });
+    const navElemArr = [navOpenBtn, navCloseBtn, overlay];
   
-  async function handleLogin(e) {
+    const navToggleEvent = function (elem) {
+        for (let i = 0; i < elem.length; i++) {
+            elem[i].addEventListener("click", function () {
+                navbar.classList.toggle("active");
+                overlay.classList.toggle("active");
+            });
+        }
+    }
+  
+    navToggleEvent(navElemArr);
+    navToggleEvent(navLinks);
+  
+    // Header sticky and go-to-top functionality
+    const header = document.querySelector("[data-header]");
+    const goTopBtn = document.querySelector("[data-go-top]");
+  
+    window.addEventListener("scroll", function () {
+        if (window.scrollY >= 200) {
+            header.classList.add("active");
+            goTopBtn.classList.add("active");
+        } else {
+            header.classList.remove("active");
+            goTopBtn.classList.remove("active");
+        }
+    });
+
+     // Toggle between login and signup
+    //  const container = document.getElementById('container');
+    //  const registerBtn = document.getElementById('register');
+    //  const loginBtn = document.getElementById('login');
+ 
+    //  registerBtn.addEventListener('click', () => {
+    //      container.classList.add("active");
+    //  });
+ 
+    //  loginBtn.addEventListener('click', () => {
+    //      container.classList.remove("active");
+    //  });
+
+});
+
+async function handleLogin(e) {
     e.preventDefault();
     const email = document.getElementById('login-email').value;
     const password = document.getElementById('login-password').value;
-  
+
     try {
         const response = await fetch('/api/auth/login', {
             method: 'POST',
@@ -24,12 +92,13 @@ document.addEventListener('DOMContentLoaded', () => {
             },
             body: JSON.stringify({ email, password }),
         });
-  
+
         const data = await response.json();
-  
+
         if (response.ok) {
             alert('Login successful');
-            // TODO: Store the token and redirect to user dashboard
+            localStorage.setItem('token', data.token);
+            // TODO: Redirect to user dashboard
         } else {
             alert(`Login failed: ${data.message}`);
         }
@@ -37,14 +106,14 @@ document.addEventListener('DOMContentLoaded', () => {
         console.error('Login error:', error);
         alert('An error occurred during login');
     }
-  }
-  
-  async function handleSignup(e) {
+}
+
+async function handleSignup(e) {
     e.preventDefault();
     const name = document.getElementById('signup-name').value;
     const email = document.getElementById('signup-email').value;
     const password = document.getElementById('signup-password').value;
-  
+
     try {
         const response = await fetch('/api/auth/signup', {
             method: 'POST',
@@ -53,12 +122,13 @@ document.addEventListener('DOMContentLoaded', () => {
             },
             body: JSON.stringify({ name, email, password }),
         });
-  
+
         const data = await response.json();
-  
+
         if (response.ok) {
             alert('Signup successful');
-            // TODO: Store the token and redirect to user dashboard
+            localStorage.setItem('token', data.token);
+            // TODO: Redirect to user dashboard
         } else {
             alert(`Signup failed: ${data.message}`);
         }
@@ -66,35 +136,84 @@ document.addEventListener('DOMContentLoaded', () => {
         console.error('Signup error:', error);
         alert('An error occurred during signup');
     }
-  }
-  
-  function handleSearch(e) {
+}
+
+async function handleSearch(e) {
     e.preventDefault();
-    const destination = document.getElementById('destination').value;
+    const from = document.getElementById('from').value;
+    const to = document.getElementById('to').value;
     const date = document.getElementById('date').value;
-    const minPrice = document.getElementById('price-min').value;
-    const maxPrice = document.getElementById('price-max').value;
-  
-    // TODO: Implement search functionality
-    console.log('Search params:', { destination, date, minPrice, maxPrice });
-    alert('Search functionality not implemented yet');
-  }
-  
-  async function fetchFeaturedDeals() {
-    // TODO: Fetch featured deals from the server
-    const mockDeals = [
-        { id: 1, destination: 'Paris', price: 500 },
-        { id: 2, destination: 'Tokyo', price: 800 },
-        { id: 3, destination: 'New York', price: 600 },
-    ];
-  
-    const dealsContainer = document.getElementById('deals-container');
-    mockDeals.forEach(deal => {
-        const dealElement = document.createElement('div');
-        dealElement.innerHTML = `
-            <h3>${deal.destination}</h3>
-            <p>Price: $${deal.price}</p>
+    
+    try {
+        // Convert date to YYYY-MM-DD format
+        const [day, month, year] = date.split('-');
+        const searchDate = `${year}-${month}-${day}`;
+
+        const response = await fetch(`/api/flights/search?from=${from}&to=${to}&date=${searchDate}`);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const flights = await response.json();
+        displaySearchResults(flights);
+    } catch (error) {
+        console.error('Search error:', error);
+        alert('An error occurred during the search: ' + error.message);
+    }
+}
+
+function displaySearchResults(flights) {
+    const resultsContainer = document.getElementById('search-results');
+    resultsContainer.innerHTML = '';
+
+    if (flights.length === 0) {
+        resultsContainer.innerHTML = '<p>No flights found.</p>';
+        return;
+    }
+
+    const ul = document.createElement('ul');
+    flights.forEach(flight => {
+        const li = document.createElement('li');
+        li.innerHTML = `
+            <p>Flight ${flight.flightNumber}: ${flight.from} to ${flight.to}</p>
+            <p>Departure: ${new Date(flight.departureTime).toLocaleString()}</p>
+            <p>Arrival: ${new Date(flight.arrivalTime).toLocaleString()}</p>
+            <p>Price: $${flight.price}</p>
+            <button onclick="bookFlight('${flight._id}')">Book Now</button>
         `;
-        dealsContainer.appendChild(dealElement);
+        ul.appendChild(li);
     });
-  }
+
+    resultsContainer.appendChild(ul);
+}
+
+async function bookFlight(flightId) {
+    const token = localStorage.getItem('token');
+    if (!token) {
+        alert('Please log in to book a flight');
+        return;
+    }
+
+    try {
+        const response = await fetch('/api/flights/book', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'x-auth-token': token
+            },
+            body: JSON.stringify({ flightId })
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+            alert('Flight booked successfully');
+            // TODO: Update UI or redirect to booking confirmation page
+        } else {
+            alert(`Booking failed: ${data.message}`);
+        }
+    } catch (error) {
+        console.error('Booking error:', error);
+        alert('An error occurred during booking');
+    }
+}
