@@ -48,6 +48,7 @@
   /* border-radius */
   --radius-15: 15px;
   --radius-25: 25px;
+  
 }
 
 /*-----------------------------------*\
@@ -421,6 +422,64 @@ body { background: var(--white); }
   border-radius: 50px;
 }
 
+/* Add this to your existing CSS file */
+
+#search-results ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+#search-results li {
+  border: 1px solid #ddd;
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+#search-results button {
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+#booking-confirmation {
+  background-color: #f0f0f0;
+  border: 1px solid #ddd;
+  padding: 20px;
+  margin-top: 20px;
+  border-radius: 5px;
+}
+
+/* User Tickets Section Styles */
+.user-tickets {
+  padding: 50px 0;
+}
+
+#ticket-list {
+  margin-top: 20px;
+}
+
+#ticket-list ul {
+  list-style: none;
+  padding: 0;
+}
+
+#ticket-list li {
+  background-color: var(--grey);
+  margin-bottom: 10px;
+  padding: 15px;
+  border-radius: 4px;
+}
+
+
 @media (min-width: 768px) {
   .tour-search-form {
     grid-template-columns: 1fr 1fr;
@@ -563,6 +622,7 @@ body { background: var(--white); }
 }
 
 .copyright a:is(:hover, :focus) { color: var(--white); }
+
 
 /*-----------------------------------*\
  * #GO TO TOP
@@ -1038,3 +1098,4 @@ body { background: var(--white); }
   .container { max-width: 1180px; }
 
 }
+

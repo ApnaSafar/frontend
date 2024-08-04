@@ -179,23 +179,26 @@ function displaySearchResults(flights) {
             <p>Departure: ${new Date(flight.departureTime).toLocaleString()}</p>
             <p>Arrival: ${new Date(flight.arrivalTime).toLocaleString()}</p>
             <p>Price: $${flight.price}</p>
-            <button onclick="bookFlight('${flight._id}')">Book Now</button>
-        `;
+            <p>Available Seats: ${flight.seats}</p>
+      <button onclick="bookFlight('${flight._id}')">Book Now</button>
+    `;
         ul.appendChild(li);
     });
 
     resultsContainer.appendChild(ul);
 }
 
+// In your script.js file
+
 async function bookFlight(flightId) {
     const token = localStorage.getItem('token');
     if (!token) {
-        alert('Please log in to book a flight');
+        alert('Please log in to book a ticket');
         return;
     }
 
     try {
-        const response = await fetch('/api/flights/book', {
+        const response = await fetch('/api/tickets/book', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -206,14 +209,93 @@ async function bookFlight(flightId) {
 
         const data = await response.json();
 
+             if (response.ok) {
+                alert('Ticket booked successfully');
+                // Refresh the flight search or redirect to user tickets
+                getUserTickets();
+            } else {
+                alert(`Booking failed: ${data.message}`);
+            }
+        } catch (error) {
+            console.error('Booking error:', error);
+            alert('An error occurred during booking: ' + error.message);
+        }
+    }
+    
+async function getUserTickets() {
+    const token = localStorage.getItem('token');
+    if (!token) {
+        alert('Please log in to view your tickets');
+        return;
+    }
+
+    try {
+        const response = await fetch('/api/tickets/user', {
+            headers: {
+                'x-auth-token': token
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const tickets = await response.json();
+        displayUserTickets(tickets);
+    } catch (error) {
+        console.error('Error fetching user tickets:', error);
+        alert('An error occurred while fetching your tickets');
+    }
+}
+
+async function cancelTicket(ticketId) {
+    const token = localStorage.getItem('token');
+    if (!token) {
+        alert('Please log in to cancel a ticket');
+        return;
+    }
+
+    try {
+        const response = await fetch(`/api/tickets/cancel/${ticketId}`, {
+            method: 'PUT',
+            headers: {
+                'x-auth-token': token
+            }
+        });
+
+        const data = await response.json();
+
         if (response.ok) {
-            alert('Flight booked successfully');
-            // TODO: Update UI or redirect to booking confirmation page
+            alert('Ticket cancelled successfully');
+            getUserTickets(); // Refresh the ticket list
         } else {
-            alert(`Booking failed: ${data.message}`);
+            alert(`Cancellation failed: ${data.message}`);
         }
     } catch (error) {
-        console.error('Booking error:', error);
-        alert('An error occurred during booking');
+        console.error('Cancellation error:', error);
+        alert('An error occurred during cancellation');
     }
+}
+
+function displayUserTickets(tickets) {
+    const ticketList = document.getElementById('ticket-list');
+    ticketList.innerHTML = '';
+    if (tickets.length === 0) {
+        ticketList.innerHTML = '<p>No tickets found.</p>';
+        return;
+    }
+
+    const ul = document.createElement('ul');
+    tickets.forEach(ticket => {
+        const li = document.createElement('li');
+        li.innerHTML = `
+            <p>Flight: ${ticket.flight.flightNumber}</p>
+            <p>From: ${ticket.flight.from} To: ${ticket.flight.to}</p>
+            <p>Departure: ${new Date(ticket.flight.departureTime).toLocaleString()}</p>
+            <p>Seat: ${ticket.seatNumber}</p>
+        `;
+        ul.appendChild(li);
+    });
+
+    ticketList.appendChild(ul);
 }
