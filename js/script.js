@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
+    localStorage.clear()
     const fromSelect = document.getElementById('from');
     const toSelect = document.getElementById('to');
 
