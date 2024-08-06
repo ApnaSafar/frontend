@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Travel Ticket Booking Platform</title>
+    <title>User Dashboard - Travel Ticket Booking</title>
     <!-- favicon -->
     <link rel="shortcut icon" href="./images/travel.svg" type="image/svg+xml" />
 
@@ -103,7 +103,8 @@
               </li>
             </ul>
           </nav>
-          <button class="btn btn-primary" onclick="scrollToAuth()">Book Now</button>
+          <button class="btn btn-primary">Book Now</button>
+          <button id="logout-btn" class="btn btn-secondary">Logout</button>
         </div>
       </div>
     </header>
@@ -118,7 +119,7 @@
             </p>
             <div class="btn-group">
               <button class="btn btn-primary">Learn more</button>
-              <button class="btn btn-secondary" onclick="scrollToAuth()">Book now</button>
+              <button class="btn btn-secondary">Book now</button>
             </div>
           </div>
         </section>
@@ -159,80 +160,75 @@
           </div>
         </section>
 
-        <section class="popular" id="login">
-          <div class="container">
-            <h2 class="h2 section-title">Login</h2>
-            <form action="" class="login-form" id="login-form">
-              <div class="input-wrapper">
-                <label for="login-email" class="input-label">Email</label>
-                <input
-                  type="email"
-                  name="login-email"
-                  id="login-email"
-                  required
-                  placeholder="Enter your email"
-                  class="input-field"
-                />
-              </div>
-              <div class="input-wrapper">
-                <label for="login-password" class="input-label">Password</label>
-                <input
-                  type="password"
-                  name="login-password"
-                  id="login-password"
-                  required
-                  placeholder="Enter your password"
-                  class="input-field"
-                />
-              </div>
-              <button type="submit" class="btn btn-primary">Login</button>
-            </form>
-          </div>
-        </section>
+        <section class="auth" id="auth">
+            <div class="container">
+              <h2 class="h2 section-title">Login</h2>
+              <form action="" class="login-form" id="login-form">
+                <div class="input-wrapper">
+                  <label for="login-email" class="input-label">Email</label>
+                  <input
+                    type="email"
+                    name="login-email"
+                    id="login-email"
+                    required
+                    placeholder="Enter your email"
+                    class="input-field"
+                  />
+                </div>
+                <div class="input-wrapper">
+                  <label for="login-password" class="input-label">Password</label>
+                  <input
+                    type="password"
+                    name="login-password"
+                    id="login-password"
+                    required
+                    placeholder="Enter your password"
+                    class="input-field"
+                  />
+                </div>
+                <button type="submit" class="btn btn-primary">Login</button>
+              </form>
+  
+              <h2 class="h2 section-title">Sign Up</h2>
+              <form action="" class="signup-form" id="signup-form">
+                <div class="input-wrapper">
+                  <label for="signup-name" class="input-label">Full Name</label>
+                  <input
+                    type="text"
+                    name="signup-name"
+                    id="signup-name"
+                    required
+                    placeholder="Enter your full name"
+                    class="input-field"
+                  />
+                </div>
+                <div class="input-wrapper">
+                  <label for="signup-email" class="input-label">Email</label>
+                  <input
+                    type="email"
+                    name="signup-email"
+                    id="signup-email"
+                    required
+                    placeholder="Enter your email"
+                    class="input-field"
+                  />
+                </div>
+                <div class="input-wrapper">
+                  <label for="signup-password" class="input-label">Password</label>
+                  <input
+                    type="password"
+                    name="signup-password"
+                    id="signup-password"
+                    required
+                    placeholder="Choose a password"
+                    class="input-field"
+                  />
+                </div>
+                <button type="submit" class="btn btn-primary">Sign Up</button>
+              </form>
+            </div>
+          </section>
 
-        <section class="package" id="signup">
-          <div class="container">
-            <h2 class="h2 section-title">Sign Up</h2>
-            <form action="" class="signup-form" id="signup-form">
-              <div class="input-wrapper">
-                <label for="signup-name" class="input-label">Full Name</label>
-                <input
-                  type="text"
-                  name="signup-name"
-                  id="signup-name"
-                  required
-                  placeholder="Enter your full name"
-                  class="input-field"
-                />
-              </div>
-              <div class="input-wrapper">
-                <label for="signup-email" class="input-label">Email</label>
-                <input
-                  type="email"
-                  name="signup-email"
-                  id="signup-email"
-                  required
-                  placeholder="Enter your email"
-                  class="input-field"
-                />
-              </div>
-              <div class="input-wrapper">
-                <label for="signup-password" class="input-label"
-                  >Password</label
-                >
-                <input
-                  type="password"
-                  name="signup-password"
-                  id="signup-password"
-                  required
-                  placeholder="Choose a password"
-                  class="input-field"
-                />
-              </div>
-              <button type="submit" class="btn btn-primary">Sign Up</button>
-            </form>
-          </div>
-        </section>
       </article>
     </main>
 

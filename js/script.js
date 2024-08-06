@@ -1,33 +1,9 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const fromSelect = document.getElementById('from');
-    const toSelect = document.getElementById('to');
-
-    // Fetch cities from the backend
-    fetch('/api/cities')
-        .then(response => response.json())
-        .then(cities => {
-            cities.forEach(city => {
-                const optionFrom = document.createElement('option');
-                optionFrom.value = city;
-                optionFrom.textContent = city;
-                fromSelect.appendChild(optionFrom);
-
-                const optionTo = document.createElement('option');
-                optionTo.value = city;
-                optionTo.textContent = city;
-                toSelect.appendChild(optionTo);
-            });
-        })
-        .catch(error => console.error('Error fetching cities:', error));
-
-
     const loginForm = document.getElementById('login-form');
     const signupForm = document.getElementById('signup-form');
-    const searchForm = document.getElementById('search-form');
   
     loginForm.addEventListener('submit', handleLogin);
     signupForm.addEventListener('submit', handleSignup);
-    searchForm.addEventListener('submit', handleSearch);
 
     // Navbar toggle functionality
     const overlay = document.querySelector("[data-overlay]");
@@ -63,20 +39,6 @@ document.addEventListener('DOMContentLoaded', () => {
             goTopBtn.classList.remove("active");
         }
     });
-
-     // Toggle between login and signup
-    //  const container = document.getElementById('container');
-    //  const registerBtn = document.getElementById('register');
-    //  const loginBtn = document.getElementById('login');
- 
-    //  registerBtn.addEventListener('click', () => {
-    //      container.classList.add("active");
-    //  });
- 
-    //  loginBtn.addEventListener('click', () => {
-    //      container.classList.remove("active");
-    //  });
-
 });
 
 async function handleLogin(e) {
@@ -98,7 +60,7 @@ async function handleLogin(e) {
         if (response.ok) {
             alert('Login successful');
             localStorage.setItem('token', data.token);
-            // TODO: Redirect to user dashboard
+            window.location.href = '/dashboard';
         } else {
             alert(`Login failed: ${data.message}`);
         }
@@ -128,7 +90,7 @@ async function handleSignup(e) {
         if (response.ok) {
             alert('Signup successful');
             localStorage.setItem('token', data.token);
-            // TODO: Redirect to user dashboard
+            window.location.href = '/dashboard';
         } else {
             alert(`Signup failed: ${data.message}`);
         }
@@ -138,82 +100,7 @@ async function handleSignup(e) {
     }
 }
 
-async function handleSearch(e) {
-    e.preventDefault();
-    const from = document.getElementById('from').value;
-    const to = document.getElementById('to').value;
-    const date = document.getElementById('date').value;
-    
-    try {
-        // Convert date to YYYY-MM-DD format
-        const [day, month, year] = date.split('-');
-        const searchDate = `${year}-${month}-${day}`;
-
-        const response = await fetch(`/api/flights/search?from=${from}&to=${to}&date=${searchDate}`);
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const flights = await response.json();
-        displaySearchResults(flights);
-    } catch (error) {
-        console.error('Search error:', error);
-        alert('An error occurred during the search: ' + error.message);
-    }
-}
-
-function displaySearchResults(flights) {
-    const resultsContainer = document.getElementById('search-results');
-    resultsContainer.innerHTML = '';
-
-    if (flights.length === 0) {
-        resultsContainer.innerHTML = '<p>No flights found.</p>';
-        return;
-    }
-
-    const ul = document.createElement('ul');
-    flights.forEach(flight => {
-        const li = document.createElement('li');
-        li.innerHTML = `
-            <p>Flight ${flight.flightNumber}: ${flight.from} to ${flight.to}</p>
-            <p>Departure: ${new Date(flight.departureTime).toLocaleString()}</p>
-            <p>Arrival: ${new Date(flight.arrivalTime).toLocaleString()}</p>
-            <p>Price: $${flight.price}</p>
-            <button onclick="bookFlight('${flight._id}')">Book Now</button>
-        `;
-        ul.appendChild(li);
-    });
-
-    resultsContainer.appendChild(ul);
-}
-
-async function bookFlight(flightId) {
-    const token = localStorage.getItem('token');
-    if (!token) {
-        alert('Please log in to book a flight');
-        return;
-    }
-
-    try {
-        const response = await fetch('/api/flights/book', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'x-auth-token': token
-            },
-            body: JSON.stringify({ flightId })
-        });
-
-        const data = await response.json();
-
-        if (response.ok) {
-            alert('Flight booked successfully');
-            // TODO: Update UI or redirect to booking confirmation page
-        } else {
-            alert(`Booking failed: ${data.message}`);
-        }
-    } catch (error) {
-        console.error('Booking error:', error);
-        alert('An error occurred during booking');
-    }
+function scrollToAuth() {
+    const authSection = document.getElementById('auth');
+    authSection.scrollIntoView({ behavior: 'smooth' });
 }
