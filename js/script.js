@@ -77,7 +77,7 @@ async function handleLogin(e) {
             alert('Login successful');
             localStorage.setItem('token', data.token);
             console.log(localStorage.getItem('token'));
-            window.location.href = '/dashboard';
+            window.location.href = './dashboard.html';
             
         } else {
             alert(`Login failed: ${data.message}`);
@@ -108,7 +108,7 @@ async function handleSignup(e) {
         if (response.ok) {
             alert('Signup successful');
             localStorage.setItem('token', data.token);
-            //window.location.href = '/dashboard';
+            window.location.href = './dashboard.html';
         } else {
             alert(`Signup failed: ${data.message}`);
         }
