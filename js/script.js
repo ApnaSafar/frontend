@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
+    localStorage.clear()
     const loginForm = document.getElementById('login-form');
     const signupForm = document.getElementById('signup-form');
   
@@ -39,6 +40,20 @@ document.addEventListener('DOMContentLoaded', () => {
             goTopBtn.classList.remove("active");
         }
     });
+
+    // Toggle between login and signup
+    //  const container = document.getElementById('container');
+    //  const registerBtn = document.getElementById('register');
+    //  const loginBtn = document.getElementById('login');
+ 
+    //  registerBtn.addEventListener('click', () => {
+    //      container.classList.add("active");
+    //  });
+ 
+    //  loginBtn.addEventListener('click', () => {
+    //      container.classList.remove("active");
+    //  });
+
 });
 
 async function handleLogin(e) {
@@ -47,7 +62,7 @@ async function handleLogin(e) {
     const password = document.getElementById('login-password').value;
 
     try {
-        const response = await fetch('/api/auth/login', {
+        const response = await fetch('http:localhost:3000/api/auth/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -60,7 +75,9 @@ async function handleLogin(e) {
         if (response.ok) {
             alert('Login successful');
             localStorage.setItem('token', data.token);
+            console.log(localStorage.getItem('token'));
             window.location.href = '/dashboard';
+            
         } else {
             alert(`Login failed: ${data.message}`);
         }
@@ -77,7 +94,7 @@ async function handleSignup(e) {
     const password = document.getElementById('signup-password').value;
 
     try {
-        const response = await fetch('/api/auth/signup', {
+        const response = await fetch('http:localhost:3000/api/auth/signup', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -90,7 +107,7 @@ async function handleSignup(e) {
         if (response.ok) {
             alert('Signup successful');
             localStorage.setItem('token', data.token);
-            window.location.href = '/dashboard';
+            //window.location.href = '/dashboard';
         } else {
             alert(`Signup failed: ${data.message}`);
         }
@@ -101,6 +118,11 @@ async function handleSignup(e) {
 }
 
 function scrollToAuth() {
-    const authSection = document.getElementById('auth');
-    authSection.scrollIntoView({ behavior: 'smooth' });
+    const token = localStorage.getItem('token');
+    if (token) {
+      window.location.href = '/dashboard';
+    } else {
+      const authSection = document.getElementById('login');
+      authSection.scrollIntoView({ behavior: 'smooth' });
+    }
 }

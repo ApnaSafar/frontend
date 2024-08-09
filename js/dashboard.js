@@ -20,10 +20,17 @@ async function fetchUserTickets() {
                 'x-auth-token': localStorage.getItem('token')
             }
         });
+        if (response.status === 401) {
+            alert('Please log in to view your tickets');
+            window.location.href = '/index.html';
+            return;
+        }
+
         const tickets = await response.json();
         displayUserTickets(tickets);
     } catch (error) {
         console.error('Error fetching tickets:', error);
+        alert('An error occurred while fetching your tickets');
     }
 }
 
@@ -140,7 +147,7 @@ async function bookFlight(flightId) {
 
         if (response.ok) {
             alert('Flight booked successfully');
-            fetchUserTickets(); // Refresh the user's tickets
+            fetchUserTickets(); 
         } else {
             alert(`Booking failed: ${data.message}`);
         }
@@ -155,5 +162,4 @@ function logout() {
     window.location.href = '/index.html';
 }
 
-// Add this to the DOMContentLoaded event listener
 document.getElementById('logout-btn').addEventListener('click', logout);
