@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     localStorage.clear()
+
     const loginForm = document.getElementById('login-form');
     const signupForm = document.getElementById('signup-form');
   
