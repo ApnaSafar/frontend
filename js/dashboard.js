@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 async function fetchUserTickets() {
     try {
-        const response = await fetch('/api/user/tickets', {
+        const response = await fetch('http://localhost:3000/api/user/tickets', {
             headers: {
                 'x-auth-token': localStorage.getItem('token')
             }
@@ -55,7 +55,7 @@ function displayUserTickets(tickets) {
 
 async function fetchCities() {
     try {
-        const response = await fetch('/api/cities');
+        const response = await fetch('http://localhost:3000/api/cities');
         const cities = await response.json();
         populateCityDropdowns(cities);
     } catch (error) {
@@ -87,7 +87,7 @@ async function handleSearch(e) {
     const date = document.getElementById('date').value;
     
     try {
-        const response = await fetch(`/api/flights/search?from=${from}&to=${to}&date=${date}`);
+        const response = await fetch(`http://localhost:3000/api/flights/search?from=${from}&to=${to}&date=${date}`);
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -134,7 +134,7 @@ async function bookFlight(flightId) {
     }
 
     try {
-        const response = await fetch('/api/flights/book', {
+        const response = await fetch('http://localhost:3000/api/flights/book', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
