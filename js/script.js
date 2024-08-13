@@ -1,13 +1,47 @@
 document.addEventListener('DOMContentLoaded', () => {
     localStorage.clear()
+    const fromSelect = document.getElementById('from');
+    const toSelect = document.getElementById('to');
 
-    const loginForm = document.getElementById('login-form');
-    const signupForm = document.getElementById('signup-form');
-  
-    loginForm.addEventListener('submit', handleLogin);
-    signupForm.addEventListener('submit', handleSignup);
+    // Fetch cities from the backend
+    fetch('/api/cities')
+        .then(response => response.json())
+        .then(cities => {
+            cities.forEach(city => {
+                const optionFrom = document.createElement('option');
+                optionFrom.value = city;
+                optionFrom.textContent = city;
+                fromSelect.appendChild(optionFrom);
 
-    // Navbar toggle functionality
+                const optionTo = document.createElement('option');
+                optionTo.value = city;
+                optionTo.textContent = city;
+                toSelect.appendChild(optionTo);
+            });
+        })
+        .catch(error => console.error('Error fetching cities:', error));
+
+        const loginForm = document.getElementById('ls-login-form');
+        const signupForm = document.getElementById('ls-signup-form');
+        const searchForm = document.getElementById('search-form');
+
+        const container = document.getElementById('ls-container');
+        const registerBtn = document.getElementById('ls-register');
+        const loginBtn = document.getElementById('ls-login');
+
+        registerBtn.addEventListener('click', () => {
+    container.classList.add("ls-right-panel-active");
+  });
+
+  loginBtn.addEventListener('click', () => {
+    container.classList.remove("ls-right-panel-active");
+  });
+
+        loginForm.addEventListener('submit', handleLogin);
+        signupForm.addEventListener('submit', handleSignup);
+        searchForm.addEventListener('submit', handleSearch);
+
+    // navbar toggle
     const overlay = document.querySelector("[data-overlay]");
     const navOpenBtn = document.querySelector("[data-nav-open-btn]");
     const navbar = document.querySelector("[data-navbar]");
@@ -53,9 +87,9 @@ document.addEventListener('DOMContentLoaded', () => {
  
     //  loginBtn.addEventListener('click', () => {
     //      container.classList.remove("active");
-    //  });
-
+    //  });   
 });
+
 
 async function handleLogin(e) {
     e.preventDefault();
@@ -119,11 +153,11 @@ async function handleSignup(e) {
 }
 
 function scrollToAuth() {
-    const token = localStorage.getItem('token');
-    if (token) {
-      window.location.href = '/dashboard';
-    } else {
-      const authSection = document.getElementById('login');
-      authSection.scrollIntoView({ behavior: 'smooth' });
-    }
+const token = localStorage.getItem('token');
+if (token) {
+  window.location.href = '/dashboard';
+} else {
+  const authSection = document.getElementById('login');
+  authSection.scrollIntoView({ behavior: 'smooth' });
+}
 }

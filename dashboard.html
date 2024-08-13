@@ -160,6 +160,15 @@
           </div>
         </section>
 
+        <section class="user-tickets" id="user-tickets">
+          <div class="container">
+            <h2 class="h2 section-title">Your Tickets</h2>
+            <button onclick="getUserTickets()" class="btn btn-primary">View My Tickets</button>
+            <div id="ticket-list"></div>
+          </div>
+        </section>
+        
+
         <section class="popular" id="login">
             <div class="container">
               <h2 class="h2 section-title">Login</h2>
@@ -173,8 +182,10 @@
                     required
                     placeholder="Enter your email"
                     class="input-field"
+                    data-placeholder="Email ID"
                   />
                 </div>
+
                 <div class="input-wrapper">
                   <label for="login-password" class="input-label">Password</label>
                   <input
@@ -184,6 +195,7 @@
                     required
                     placeholder="Enter your password"
                     class="input-field"
+                    data-placeholder="Password"
                   />
                 </div>
                 <button type="submit" class="btn btn-primary">Login</button>
@@ -199,6 +211,7 @@
                     id="signup-name"
                     required
                     placeholder="Enter your full name"
+                    data-placeholder="Full Name"
                     class="input-field"
                   />
                 </div>
@@ -210,6 +223,7 @@
                     id="signup-email"
                     required
                     placeholder="Enter your email"
+                    data-placeholder="Email ID"
                     class="input-field"
                   />
                 </div>
@@ -221,6 +235,7 @@
                     id="signup-password"
                     required
                     placeholder="Choose a password"
+                    data-placeholder="Password"
                     class="input-field"
                   />
                 </div>
@@ -256,5 +271,6 @@
       nomodule
       src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"
     ></script>
+    <script src="/js/wave-animation.js"></script>
   </body>
 </html>

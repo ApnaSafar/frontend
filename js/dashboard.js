@@ -10,7 +10,36 @@ document.addEventListener('DOMContentLoaded', () => {
     const searchForm = document.getElementById('search-form');
     searchForm.addEventListener('submit', handleSearch);
 
+    
+
     document.getElementById('logout-btn').addEventListener('click', logout);
+
+    //animation wave in text
+    const inputFields = document.querySelectorAll('.input-field');
+  
+    inputFields.forEach(input => {
+      const placeholder = input.getAttribute('data-placeholder');
+      input.setAttribute('placeholder', ' '); // Set to space to activate :placeholder-shown
+  
+      const placeholderElement = document.createElement('div');
+      placeholderElement.className = 'placeholder-text';
+      placeholderElement.innerHTML = placeholder.split('').map((char, index) => 
+        `<span style="transition-delay:${index * 50}ms">${char}</span>`
+      ).join('');
+      
+      input.parentNode.insertBefore(placeholderElement, input.nextSibling);
+  
+      input.addEventListener('focus', () => {
+        placeholderElement.classList.add('active');
+      });
+  
+      input.addEventListener('blur', () => {
+        if (input.value === '') {
+          placeholderElement.classList.remove('active');
+        }
+      });
+    });
+    
 });
 
 async function fetchUserTickets() {
