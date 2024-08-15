@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Travel Ticket Booking Platform</title>
+     <!-- favicon -->
     <link rel="shortcut icon" href="./images/travel.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="./css/style.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -157,43 +158,90 @@
           </div>
         </section>
 
+        <section class="user-tickets" id="user-tickets">
+          <div class="container">
+            <h2 class="h2 section-title">Your Tickets</h2>
+            <button onclick="getUserTickets()" class="btn btn-primary">View My Tickets</button>
+            <div id="ticket-list"></div>
+          </div>
+        </section>
+
         
 
-        <section class="login-signup-section" id="login-signup">
-          <div class="ls-container" id="ls-container">
-            <div class="ls-form-container ls-sign-up">
-              <form id="ls-signup-form">
-                <h1>Create Account</h1>
-                <input type="text" id="ls-signup-name" placeholder="Name" required>
-                <input type="email" id="ls-signup-email" placeholder="Email" required>
-                <input type="password" id="ls-signup-password" placeholder="Password" required>
-                <button type="submit">Sign Up</button>
-              </form>
-            </div>
-            <div class="ls-form-container ls-sign-in">
-              <form id="ls-login-form">
-                <h1>Sign In</h1>
-                <input type="email" id="ls-login-email" placeholder="Email" required>
-                <input type="password" id="ls-login-password" placeholder="Password" required>
-                <a href="#">Forgot your password?</a>
-                <button type="submit">Sign In</button>
-              </form>
-            </div>
-            <div class="ls-toggle-container">
-              <div class="ls-toggle">
-                <div class="ls-toggle-panel ls-toggle-left">
-                  <h1>Welcome Back!</h1>
-                  <p>Enter your personal details to use all site features</p>
-                  <button class="ls-hidden" id="ls-login">Sign In</button>
-                </div>
-                <div class="ls-toggle-panel ls-toggle-right">
-                  <h1>Hello, Friend!</h1>
-                  <p>Register with your personal details to use all site features</p>
-                  <button class="ls-hidden" id="ls-register">Sign Up</button>
-                </div>
+        <section class="popular" id="login">
+          <div class="container">
+            <h2 class="h2 section-title">Login</h2>
+            <form action="" class="login-form" id="login-form">
+              <div class="input-wrapper">
+                <label for="login-email" class="input-label">Email</label>
+                <input
+                  type="email"
+                  name="login-email"
+                  id="login-email"
+                  required
+                  placeholder="Enter your email"
+                  class="input-field"
+                />
               </div>
-            </div>
+              <div class="input-wrapper">
+                <label for="login-password" class="input-label">Password</label>
+                <input
+                  type="password"
+                  name="login-password"
+                  id="login-password"
+                  required
+                  placeholder="Enter your password"
+                  class="input-field"
+                />
+              </div>
+              <button type="submit" class="btn btn-primary">Login</button>
+            </form>
           </div>
+        </section>
+
+        <section class="package" id="signup">
+          <div class="container">
+            <h2 class="h2 section-title">Sign Up</h2>
+            <form action="" class="signup-form" id="signup-form">
+              <div class="input-wrapper">
+                <label for="signup-name" class="input-label">Full Name</label>
+                <input
+                  type="text"
+                  name="signup-name"
+                  id="signup-name"
+                  required
+                  placeholder="Enter your full name"
+                  class="input-field"
+                />
+              </div>
+              <div class="input-wrapper">
+                <label for="signup-email" class="input-label">Email</label>
+                <input
+                  type="email"
+                  name="signup-email"
+                  id="signup-email"
+                  required
+                  placeholder="Enter your email"
+                  class="input-field"
+                />
+              </div>
+              <div class="input-wrapper">
+                <label for="signup-password" class="input-label"
+                  >Password</label
+                >
+                <input
+                  type="password"
+                  name="signup-password"
+                  id="signup-password"
+                  required
+                  placeholder="Choose a password"
+                  class="input-field"
+                />
+              </div>
+              <button type="submit" class="btn btn-primary">Sign Up</button>
+            </form>
+          </div>
+          
         </section>
         
       </article>
@@ -208,6 +256,7 @@
         </div>
       </div>
     </footer>
+
     
     <a href="#top" class="go-top" data-go-top title="Go to top">
   <ion-icon name="chevron-up-outline"></ion-icon>
