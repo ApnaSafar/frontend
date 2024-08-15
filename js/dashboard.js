@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     const token = localStorage.getItem('token');
+    console.log(token);
     if (!token) {
         window.location.href = '/index.html';
     }
@@ -14,6 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 async function fetchUserTickets() {
+    console.log(localStorage.getItem('token'));
     try {
         const response = await fetch('http://localhost:3000/api/user/tickets', {
             headers: {
@@ -27,6 +29,7 @@ async function fetchUserTickets() {
         }
 
         const tickets = await response.json();
+        //console.log(tickets);
         displayUserTickets(tickets);
     } catch (error) {
         console.error('Error fetching tickets:', error);
@@ -45,8 +48,9 @@ function displayUserTickets(tickets) {
 
     const ul = document.createElement('ul');
     tickets.forEach(ticket => {
+        console.log(ticket.flight);
         const li = document.createElement('li');
-        li.textContent = `Flight ${ticket.flightNumber}: ${ticket.from} to ${ticket.to} on ${new Date(ticket.date).toLocaleDateString()}`;
+        li.textContent = `Flight ${ticket.flight.flightNumber}: ${ticket.flight.from} to ${ticket.flight.to} on ${new Date(ticket.flight.departureTime).toLocaleDateString()}`;
         ul.appendChild(li);
     });
 
