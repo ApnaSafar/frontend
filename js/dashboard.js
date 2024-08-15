@@ -3,111 +3,16 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!token) {
         window.location.href = '/index.html';
     }
+    const searchForm = document.getElementById('search-form');
 
     fetchUserTickets();
     fetchCities();
 
-    const searchForm = document.getElementById('search-form');
     searchForm.addEventListener('submit', handleSearch);
-
-    
 
     document.getElementById('logout-btn').addEventListener('click', logout);
 
-    //animation wave in text
-    const inputFields = document.querySelectorAll('.input-field');
-  
-    inputFields.forEach(input => {
-      const placeholder = input.getAttribute('data-placeholder');
-      input.setAttribute('placeholder', ' '); // Set to space to activate :placeholder-shown
-  
-      const placeholderElement = document.createElement('div');
-      placeholderElement.className = 'placeholder-text';
-      placeholderElement.innerHTML = placeholder.split('').map((char, index) => 
-        `<span style="transition-delay:${index * 50}ms">${char}</span>`
-      ).join('');
-      
-      input.parentNode.insertBefore(placeholderElement, input.nextSibling);
-  
-      input.addEventListener('focus', () => {
-        placeholderElement.classList.add('active');
-      });
-  
-      input.addEventListener('blur', () => {
-        if (input.value === '') {
-          placeholderElement.classList.remove('active');
-        }
-      });
-    });
-    
 });
-
-async function fetchUserTickets() {
-    try {
-        const response = await fetch('http://localhost:3000/api/user/tickets', {
-            headers: {
-                'x-auth-token': localStorage.getItem('token')
-            }
-        });
-        if (response.status === 401) {
-            alert('Please log in to view your tickets');
-            window.location.href = '/index.html';
-            return;
-        }
-
-        const tickets = await response.json();
-        displayUserTickets(tickets);
-    } catch (error) {
-        console.error('Error fetching tickets:', error);
-        alert('An error occurred while fetching your tickets');
-    }
-}
-
-function displayUserTickets(tickets) {
-    const ticketsContainer = document.getElementById('user-tickets');
-    ticketsContainer.innerHTML = '';
-
-    if (tickets.length === 0) {
-        ticketsContainer.innerHTML = '<p>No bookings found.</p>';
-        return;
-    }
-
-    const ul = document.createElement('ul');
-    tickets.forEach(ticket => {
-        const li = document.createElement('li');
-        li.textContent = `Flight ${ticket.flightNumber}: ${ticket.from} to ${ticket.to} on ${new Date(ticket.date).toLocaleDateString()}`;
-        ul.appendChild(li);
-    });
-
-    ticketsContainer.appendChild(ul);
-}
-
-async function fetchCities() {
-    try {
-        const response = await fetch('http://localhost:3000/api/cities');
-        const cities = await response.json();
-        populateCityDropdowns(cities);
-    } catch (error) {
-        console.error('Error fetching cities:', error);
-    }
-}
-
-function populateCityDropdowns(cities) {
-    const fromSelect = document.getElementById('from');
-    const toSelect = document.getElementById('to');
-
-    cities.forEach(city => {
-        const optionFrom = document.createElement('option');
-        optionFrom.value = city;
-        optionFrom.textContent = city;
-        fromSelect.appendChild(optionFrom);
-
-        const optionTo = document.createElement('option');
-        optionTo.value = city;
-        optionTo.textContent = city;
-        toSelect.appendChild(optionTo);
-    });
-}
 
 async function handleSearch(e) {
     e.preventDefault();
@@ -116,12 +21,17 @@ async function handleSearch(e) {
     const date = document.getElementById('date').value;
     
     try {
-        const response = await fetch(`http://localhost:3000/api/flights/search?from=${from}&to=${to}&date=${date}`);
+         //converting date to YYYY-MM-DD format
+        const [day, month, year] = date.split('-');
+        const searchDate = `${year}-${month}-${day}`;
+
+        const response = await fetch(`http://localhost:3000/api/flights/search?from=${from}&to=${to}&date=${searchDate}`);
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
-
+        // parsing the response as JSON
         const flights = await response.json();
+        //handling the flight data i.e. displaying on webpage
         displaySearchResults(flights);
     } catch (error) {
         console.error('Search error:', error);
@@ -147,12 +57,184 @@ function displaySearchResults(flights) {
             <p>Departure: ${new Date(flight.departureTime).toLocaleString()}</p>
             <p>Arrival: ${new Date(flight.arrivalTime).toLocaleString()}</p>
             <p>Price: $${flight.price}</p>
-            <button onclick="bookFlight('${flight._id}')">Book Now</button>
-        `;
+            <p>Available Seats: ${flight.seats}</p>
+            <button class="btn btn-primary btn-book-now" data-flight-id="${flight._id}">Book Now</button>
+            `;
         ul.appendChild(li);
     });
 
     resultsContainer.appendChild(ul);
+
+    // Adding event listeners to Book Now buttons
+    document.querySelectorAll('.btn-book-now').forEach(button => {
+        button.addEventListener('click', function(event) {
+            event.preventDefault();
+            const flightId = this.getAttribute('data-flight-id');
+            openSeatSelection(flightId);
+        });
+    });
+}
+
+function openSeatSelection(flightId) {
+    // Open seat selection in a new window or as a popup
+    const seatSelectionWindow = window.open('seat-selection.html', 'SeatSelection', 'width=600,height=400');
+    
+    // Wait for the new window to load, then send the flightId
+    seatSelectionWindow.onload = function() {
+        seatSelectionWindow.postMessage({ type: 'FLIGHT_ID', flightId: flightId }, '*');
+    };
+}
+ //see messages from the seat selection window
+ window.addEventListener('message', async function(event) {
+    if (event.data.type === 'SEAT_SELECTED') {
+        const { flightId, seatNumber } = event.data;
+        try {
+            const response = await fetch('http://localhost:3000/api/tickets/book', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-auth-token': localStorage.getItem('token')
+                },
+                body: JSON.stringify({ flightId, seatNumber })
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                alert('Ticket booked successfully');
+                // Refresh the flight search or update UI as needed
+                fetchUserTickets();
+            } else {
+                alert(`Booking failed: ${data.message}`);
+            }
+        } catch (error) {
+            console.error('Booking error:', error);
+            alert('An error occurred during booking: ' + error.message);
+        }
+    }
+});
+
+async function fetchUserTickets() {
+    // const token = localStorage.getItem('token');
+    //     if (!token) {
+    //         alert('Please log in to view your tickets');
+    //         return;
+    //     }
+    try {
+        const response = await fetch('http://localhost:3000/api/user/tickets', {
+            headers: {
+                'x-auth-token': localStorage.getItem('token')
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        if (response.status === 401) {
+            alert('Please log in to view your tickets');
+            window.location.href = '/index.html';
+            return;
+        }
+
+        const tickets = await response.json();
+        displayUserTickets(tickets);
+    } catch (error) {
+        console.error('Error fetching tickets:', error);
+        alert('An error occurred while fetching your tickets');
+    }
+}
+
+function displayUserTickets(tickets) {
+    const ticketsContainer = document.getElementById('user-tickets');
+    ticketsContainer.innerHTML = '';
+
+    if (tickets.length === 0) {
+        ticketsContainer.innerHTML = '<p>No bookings found.</p>';
+        return;
+    }
+
+    const ul = document.createElement('ul');
+    tickets.forEach(ticket => {
+        li.innerHTML = `
+    <p>Flight: ${ticket.flight.flightNumber}</p>
+    <p>From: ${ticket.flight.from} To: ${ticket.flight.to}</p>
+    <p>Departure: ${new Date(ticket.flight.departureTime).toLocaleString()}</p>
+    <p>Status: ${ticket.status}</p>
+    <button class="btn btn-secondary btn-cancel-ticket" data-ticket-id="${ticket._id}">Cancel Ticket</button>
+`;      
+        ul.appendChild(li);
+    });
+
+    ticketsContainer.appendChild(ul);
+    // Add event listeners to the new "Cancel Ticket" buttons
+    document.querySelectorAll('.btn-cancel-ticket').forEach(button => {
+        button.addEventListener('click', function(event) {
+            event.preventDefault();
+            const ticketId = this.getAttribute('data-ticket-id');
+            cancelTicket(ticketId);
+        });
+    });
+}
+
+async function cancelTicket(ticketId) {
+    const token = localStorage.getItem('token');
+    if (!token) {
+        alert('Please log in to cancel a ticket');
+        return;
+    }
+
+    try {
+        const response = await fetch(`http://localhost:3000/api/tickets/cancel/${ticketId}`, {
+            method: 'PUT',
+            headers: {
+                'x-auth-token': token
+            }
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+            alert('Ticket cancelled successfully');
+            fetchUserTickets(); // Refresh the ticket list
+        } else {
+            alert(`Cancellation failed: ${data.message}`);
+        }
+    } catch (error) {
+        console.error('Cancellation error:', error);
+        alert('An error occurred during cancellation');
+    }
+}
+
+async function fetchCities() {
+
+    try {
+        const response = await fetch('http://localhost:3000/api/cities');
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        const cities = await response.json();
+        populateCityDropdowns(cities);
+    } catch (error) {
+        console.error('Error fetching cities:', error);
+    }
+}
+
+function populateCityDropdowns(cities) {
+    const fromSelect = document.getElementById('from');
+    const toSelect = document.getElementById('to');
+
+    cities.forEach(city => {
+        const optionFrom = document.createElement('option');
+        optionFrom.value = city;
+        optionFrom.textContent = city;
+        fromSelect.appendChild(optionFrom);
+
+        const optionTo = document.createElement('option');
+        optionTo.value = city;
+        optionTo.textContent = city;
+        toSelect.appendChild(optionTo);
+    });
 }
 
 async function bookFlight(flightId) {

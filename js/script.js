@@ -1,45 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
     localStorage.clear()
-    const fromSelect = document.getElementById('from');
-    const toSelect = document.getElementById('to');
 
-    // Fetch cities from the backend
-    fetch('/api/cities')
-        .then(response => response.json())
-        .then(cities => {
-            cities.forEach(city => {
-                const optionFrom = document.createElement('option');
-                optionFrom.value = city;
-                optionFrom.textContent = city;
-                fromSelect.appendChild(optionFrom);
-
-                const optionTo = document.createElement('option');
-                optionTo.value = city;
-                optionTo.textContent = city;
-                toSelect.appendChild(optionTo);
-            });
-        })
-        .catch(error => console.error('Error fetching cities:', error));
-
-        const loginForm = document.getElementById('ls-login-form');
-        const signupForm = document.getElementById('ls-signup-form');
-        const searchForm = document.getElementById('search-form');
-
-        const container = document.getElementById('ls-container');
-        const registerBtn = document.getElementById('ls-register');
-        const loginBtn = document.getElementById('ls-login');
-
-        registerBtn.addEventListener('click', () => {
-    container.classList.add("ls-right-panel-active");
-  });
-
-  loginBtn.addEventListener('click', () => {
-    container.classList.remove("ls-right-panel-active");
-  });
-
+        const loginForm = document.getElementById('login-form');
+        const signupForm = document.getElementById('signup-form');
+       
+  
         loginForm.addEventListener('submit', handleLogin);
-        signupForm.addEventListener('submit', handleSignup);
-        searchForm.addEventListener('submit', handleSearch);
+        signupForm.addEventListener('submit',   handleSignup);
 
     // navbar toggle
     const overlay = document.querySelector("[data-overlay]");
@@ -62,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
     navToggleEvent(navElemArr);
     navToggleEvent(navLinks);
   
-    // Header sticky and go-to-top functionality
+    // headers sticky and gototop functionality
     const header = document.querySelector("[data-header]");
     const goTopBtn = document.querySelector("[data-go-top]");
   
@@ -74,20 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
             header.classList.remove("active");
             goTopBtn.classList.remove("active");
         }
-    });
-
-    // Toggle between login and signup
-    //  const container = document.getElementById('container');
-    //  const registerBtn = document.getElementById('register');
-    //  const loginBtn = document.getElementById('login');
- 
-    //  registerBtn.addEventListener('click', () => {
-    //      container.classList.add("active");
-    //  });
- 
-    //  loginBtn.addEventListener('click', () => {
-    //      container.classList.remove("active");
-    //  });   
+    }); 
 });
 
 
@@ -97,7 +51,7 @@ async function handleLogin(e) {
     const password = document.getElementById('login-password').value;
 
     try {
-        const response = await fetch('http:localhost:3000/api/auth/login', {
+        const response = await fetch('/api/auth/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -110,6 +64,7 @@ async function handleLogin(e) {
         if (response.ok) {
             alert('Login successful');
             localStorage.setItem('token', data.token);
+            //multi
             console.log(localStorage.getItem('token'));
             window.location.href = './dashboard.html';
             
@@ -142,6 +97,7 @@ async function handleSignup(e) {
         if (response.ok) {
             alert('Signup successful');
             localStorage.setItem('token', data.token);
+            //redirecting to user dashboard
             window.location.href = './dashboard.html';
         } else {
             alert(`Signup failed: ${data.message}`);
