@@ -260,23 +260,14 @@ body { background: var(--white); }
 
 .header .navbar {
   position: fixed;
+  z-index: 1;
+  left: 0;
   top: 0;
-  right: -300px;
   width: 100%;
-  max-width: 300px;
   height: 100%;
-  background: var(--white);
-  visibility: hidden;
-  pointer-events: none;
-  transition: 0.15s ease-in;
-  z-index: 3;
-}
-
-.navbar.active {
-  right: 0;
-  visibility: visible;
-  pointer-events: all;
-  transition: 0.25s ease-out;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.4); /* Black background with opacity */
+  padding-top: 60px;
 }
 
 .navbar-top {
@@ -415,56 +406,33 @@ body { background: var(--white); }
   padding: 0;
 }
 
-#search-results li {
-  border: 1px solid #ddd;
-  margin-bottom: 10px;
-  padding: 10px;
-  border-radius: 5px;
+.close-btn {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
 }
 
-#search-results button {
-  background-color: #4CAF50;
-  border: none;
-  color: white;
-  padding: 10px 20px;
-  text-align: center;
+.close-btn:hover,
+.close-btn:focus {
+  color: black;
   text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
   cursor: pointer;
-  border-radius: 5px;
 }
 
-#booking-confirmation {
-  background-color: #f0f0f0;
-  border: 1px solid #ddd;
-  padding: 20px;
-  margin-top: 20px;
-  border-radius: 5px;
+.modal-content h2, .modal-content h3 {
+  margin-top: 0;
 }
 
-/* User Tickets Section Styles */
-.user-tickets {
-  padding: 50px 0;
-}
-
-#ticket-list {
-  margin-top: 20px;
-}
-
-#ticket-list ul {
-  list-style: none;
-  padding: 0;
-}
-
-#ticket-list li {
-  background-color: var(--grey);
-  margin-bottom: 10px;
-  padding: 15px;
+.book-btn {
+  background-color: #007BFF;
+  border: none;
+  color: #fff;
+  padding: 10px;
+  margin-top: 10px;
+  cursor: pointer;
   border-radius: 4px;
 }
-
 
 @media (min-width: 768px) {
   .tour-search-form {
@@ -1145,5 +1113,6 @@ body { background: var(--white); }
 
 .input-field:focus + .placeholder-text span {
   color: var(--bright-navy-blue);
+.book-btn:hover {
+  background-color: #0056b3;
 }
-
