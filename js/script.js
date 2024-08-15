@@ -84,7 +84,7 @@ async function handleSignup(e) {
     const password = document.getElementById('signup-password').value;
 
     try {
-        const response = await fetch('http:localhost:3000/api/auth/signup', {
+        const response = await fetch('http://localhost:3000/api/auth/signup', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -97,7 +97,8 @@ async function handleSignup(e) {
         if (response.ok) {
             alert('Signup successful');
             localStorage.setItem('token', data.token);
-            //redirecting to user dashboard
+            //multi
+            console.log(localStorage.getItem('token'));
             window.location.href = './dashboard.html';
         } else {
             alert(`Signup failed: ${data.message}`);

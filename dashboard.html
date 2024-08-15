@@ -74,7 +74,7 @@
           <nav class="navbar" data-navbar>
             <div class="navbar-top">
               <a href="#" class="logo">
-                <img src="./assets/images/logo-blue.svg" alt="Tourly logo" />
+                <img src="./images/logo-blue.svg" alt="Tourly logo" />
               </a>
 
               <button
@@ -164,87 +164,11 @@
         <section class="user-tickets" id="user-tickets">
           <div class="container">
             <h2 class="h2 section-title">Your Tickets</h2>
-            <button onclick="getUserTickets()" class="btn btn-primary">View My Tickets</button>
+            <button onclick="fetchUserTickets()" class="btn btn-primary">View My Tickets</button>
             <div id="ticket-list"></div>
           </div>
         </section>
         
-
-        <section class="popular" id="login">
-            <div class="container">
-              <h2 class="h2 section-title">Login</h2>
-              <form action="" class="login-form" id="login-form">
-                <div class="input-wrapper">
-                  <label for="login-email" class="input-label">Email</label>
-                  <input
-                    type="email"
-                    name="login-email"
-                    id="login-email"
-                    required
-                    placeholder="Enter your email"
-                    class="input-field"
-                    data-placeholder="Email ID"
-                  />
-                </div>
-
-                <div class="input-wrapper">
-                  <label for="login-password" class="input-label">Password</label>
-                  <input
-                    type="password"
-                    name="login-password"
-                    id="login-password"
-                    required
-                    placeholder="Enter your password"
-                    class="input-field"
-                    data-placeholder="Password"
-                  />
-                </div>
-                <button type="submit" class="btn btn-primary">Login</button>
-              </form>
-  
-              <h2 class="h2 section-title">Sign Up</h2>
-              <form action="" class="signup-form" id="signup-form">
-                <div class="input-wrapper">
-                  <label for="signup-name" class="input-label">Full Name</label>
-                  <input
-                    type="text"
-                    name="signup-name"
-                    id="signup-name"
-                    required
-                    placeholder="Enter your full name"
-                    data-placeholder="Full Name"
-                    class="input-field"
-                  />
-                </div>
-                <div class="input-wrapper">
-                  <label for="signup-email" class="input-label">Email</label>
-                  <input
-                    type="email"
-                    name="signup-email"
-                    id="signup-email"
-                    required
-                    placeholder="Enter your email"
-                    data-placeholder="Email ID"
-                    class="input-field"
-                  />
-                </div>
-                <div class="input-wrapper">
-                  <label for="signup-password" class="input-label">Password</label>
-                  <input
-                    type="password"
-                    name="signup-password"
-                    id="signup-password"
-                    required
-                    placeholder="Choose a password"
-                    data-placeholder="Password"
-                    class="input-field"
-                  />
-                </div>
-                <button type="submit" class="btn btn-primary">Sign Up</button>
-              </form>
-            </div>
-          </section>
-
       </article>
     </main>
 
