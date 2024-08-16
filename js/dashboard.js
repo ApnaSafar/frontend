@@ -259,3 +259,41 @@ function logout() {
 }
 
 document.getElementById('logout-btn').addEventListener('click', logout);
+
+
+async function sendReview(e) {
+    e.preventDefault();
+
+    const name = document.getElementById('name').value;
+    const review = document.getElementById('review').value;
+
+    try {
+        const response = await fetch('http://localhost:3000/api/review/add-review', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ Name: name, Text: review }),
+        });
+        
+        const data = await response.json();
+
+        if (response.ok) {
+            alert('Review submitted successfully!');
+            document.getElementById('review-form').reset(); // Clear the form
+        } else {
+            alert(`Failed to submit review: ${data.message}`);
+        }
+    } catch (error) {
+        console.error('Error submitting review:', error);
+        alert('An error occurred while submitting the review');
+    }
+}
+
+// Add this event listener to attach the sendReview function to the form
+document.addEventListener('DOMContentLoaded', () => {
+    const reviewForm = document.getElementById('review-form');
+    if (reviewForm) {
+        reviewForm.addEventListener('submit', sendReview);
+    }
+});
