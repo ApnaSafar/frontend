@@ -1122,7 +1122,7 @@ body { background: var(--white); }
 .book-btn:hover {
   background-color: #0056b3;
 }
-
+}
 .main-container {
   width: 100%;
   overflow: hidden;
