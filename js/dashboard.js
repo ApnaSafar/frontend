@@ -28,14 +28,6 @@ const moveCursor = (e) => {
 
 document.addEventListener('mousemove', moveCursor);
 
-<<<<<<< HEAD
-async function fetchUserTickets() {
-    console.log(localStorage.getItem('token'));
-    try {
-        const response = await fetch('http://localhost:3000/api/user/tickets', {
-            headers: {
-                'x-auth-token': localStorage.getItem('token')
-=======
     // Navbar toggle functionality
 const overlay = document.querySelector("[data-overlay]");
 const navOpenBtn = document.querySelector("[data-nav-open-btn]");
@@ -64,7 +56,6 @@ const navToggleEvent = function (elem) {
                 headerBottom.style.display = "";
                 heroTitle.style.display = "";
                 heroOverlay.style.backgroundColor = "rgba(0, 0, 0, 0.5)"; // Back to original translucency
->>>>>>> a8230e1f16f5b40a322e3934f3686f2cd23a5e39
             }
         });
     }
@@ -91,16 +82,6 @@ window.addEventListener("scroll", function () {
         if (!overlay.classList.contains("active")) {
             headerTop.style.display = "";
         }
-<<<<<<< HEAD
-
-        const tickets = await response.json();
-        //console.log(tickets);
-        displayUserTickets(tickets);
-    } catch (error) {
-        console.error('Error fetching tickets:', error);
-        alert('An error occurred while fetching your tickets');
-=======
->>>>>>> a8230e1f16f5b40a322e3934f3686f2cd23a5e39
     }
 });
 
@@ -112,18 +93,6 @@ scrollDownBtn.addEventListener('click', () => {
   contentWrapper.scrollIntoView({ behavior: 'smooth' });
 });
 
-<<<<<<< HEAD
-    const ul = document.createElement('ul');
-    tickets.forEach(ticket => {
-        console.log(ticket.flight);
-        const li = document.createElement('li');
-        li.textContent = `Flight ${ticket.flight.flightNumber}: ${ticket.flight.from} to ${ticket.flight.to} on ${new Date(ticket.flight.departureTime).toLocaleDateString()}`;
-        ul.appendChild(li);
-    });
-
-    ticketsContainer.appendChild(ul);
-}
-=======
 // Hide scroll down button when scrolling down
 window.addEventListener('scroll', () => {
   if (window.scrollY > 100) {
@@ -133,7 +102,6 @@ window.addEventListener('scroll', () => {
   }
 });
 });
->>>>>>> a8230e1f16f5b40a322e3934f3686f2cd23a5e39
 
 async function fetchCities() {
 
