@@ -1,0 +1,251 @@
+body {
+    background: #dcf0fa;
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.main-layout {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.left-section {
+    flex: 1;
+    max-width: 380px;
+    margin-right: 20px;
+}
+
+.right-section {
+    flex: 1;
+    max-width: 380px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.container {
+    overflow: hidden;
+}
+
+.printer-top {
+    z-index: 1;
+    border: 6px solid #666666;
+    height: 6px;
+    border-bottom: 0;
+    border-radius: 6px 6px 0 0;
+    background: #333333;
+}
+
+.printer-bottom {
+    z-index: 0;
+    border: 6px solid #666666;
+    height: 6px;
+    border-top: 0;
+    border-radius: 0 0 6px 6px;
+    background: #333333;
+}
+
+.paper-container {
+    position: relative;
+    overflow: hidden;
+    height: 467px;
+}
+
+.paper {
+    background: #ffffff;
+    height: 447px;
+    position: absolute;
+    z-index: 2;
+    margin: 0 12px;
+    margin-top: -12px;
+    animation: print 5000ms cubic-bezier(0.68, -0.55, 0.265, 0.9) infinite;
+}
+
+.main-contents {
+    margin: 0 12px;
+    padding: 24px;
+}
+
+.jagged-edge {
+    position: relative;
+    height: 20px;
+    width: 100%;
+    margin-top: -1px;
+}
+
+.jagged-edge:after {
+    content: "";
+    display: block;
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 20px;
+    background: linear-gradient(45deg,
+        transparent 33.333%,
+        #ffffff 33.333%,
+        #ffffff 66.667%,
+        transparent 66.667%),
+        linear-gradient(-45deg,
+        transparent 33.333%,
+        #ffffff 33.333%,
+        #ffffff 66.667%,
+        transparent 66.667%);
+    background-size: 16px 40px;
+    background-position: 0 -20px;
+}
+
+.success-icon {
+    text-align: center;
+    font-size: 48px;
+    background: #359d00;
+    border-radius: 50%;
+    width: 72px;
+    height: 72px;
+    line-height: 72px;
+    margin: 16px auto;
+    color: #fff;
+}
+
+.success-title {
+    font-size: 22px;
+    text-align: center;
+    color: #666;
+    font-weight: bold;
+    margin-bottom: 16px;
+}
+
+.success-description {
+    font-size: 15px;
+    line-height: 21px;
+    color: #999;
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+.order-details {
+    text-align: center;
+    color: #333;
+    font-weight: bold;
+}
+
+.order-number-label {
+    font-size: 18px;
+    margin-bottom: 8px;
+}
+
+.order-number {
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    line-height: 48px;
+    font-size: 48px;
+    padding: 8px 0;
+    margin-bottom: 24px;
+}
+
+.complement {
+    font-size: 18px;
+    margin-bottom: 8px;
+    color: #32a852;
+}
+
+@keyframes print {
+    0% {
+        transform: translateY(-90%);
+    }
+    100% {
+        transform: translateY(0%);
+    }
+}
+
+.timer-container {
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.timer-container h2 {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+#contain {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f0f0f0;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 60px;
+    height: 60px;
+    background-color: #4CAF50;
+    border-radius: 5px;
+    margin: 0 5px;
+}
+
+#min, #sec, #two {
+    font-size: 24px;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+.button-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.action-btn {
+    padding: 12px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.1s;
+}
+
+.action-btn:hover {
+    background-color: #45a049;
+}
+
+.action-btn:active {
+    transform: scale(0.98);
+}
+
+@media (max-width: 768px) {
+    .main-layout {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .left-section, .right-section {
+        margin-right: 0;
+        margin-bottom: 20px;
+        width: 100%;
+    }
+
+    .paper-container {
+        height: auto;
+    }
+
+    .paper {
+        position: relative;
+        height: auto;
+        animation: none;
+    }
+}
