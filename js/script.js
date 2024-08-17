@@ -1,13 +1,14 @@
 document.addEventListener('DOMContentLoaded', () => {
     localStorage.clear()
 
-    const loginForm = document.getElementById('login-form');
-    const signupForm = document.getElementById('signup-form');
+        const loginForm = document.getElementById('login-form');
+        const signupForm = document.getElementById('signup-form');
+       
   
-    loginForm.addEventListener('submit', handleLogin);
-    signupForm.addEventListener('submit', handleSignup);
+        loginForm.addEventListener('submit', handleLogin);
+        signupForm.addEventListener('submit',   handleSignup);
 
-    // Navbar toggle functionality
+    // navbar toggle
     const overlay = document.querySelector("[data-overlay]");
     const navOpenBtn = document.querySelector("[data-nav-open-btn]");
     const navbar = document.querySelector("[data-navbar]");
@@ -28,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
     navToggleEvent(navElemArr);
     navToggleEvent(navLinks);
   
-    // Header sticky and go-to-top functionality
+    // headers sticky and gototop functionality
     const header = document.querySelector("[data-header]");
     const goTopBtn = document.querySelector("[data-go-top]");
   
@@ -40,22 +41,9 @@ document.addEventListener('DOMContentLoaded', () => {
             header.classList.remove("active");
             goTopBtn.classList.remove("active");
         }
-    });
-
-    // Toggle between login and signup
-    //  const container = document.getElementById('container');
-    //  const registerBtn = document.getElementById('register');
-    //  const loginBtn = document.getElementById('login');
- 
-    //  registerBtn.addEventListener('click', () => {
-    //      container.classList.add("active");
-    //  });
- 
-    //  loginBtn.addEventListener('click', () => {
-    //      container.classList.remove("active");
-    //  });
-
+    }); 
 });
+
 
 async function handleLogin(e) {
     e.preventDefault();
@@ -63,7 +51,7 @@ async function handleLogin(e) {
     const password = document.getElementById('login-password').value;
 
     try {
-        const response = await fetch('http:localhost:3000/api/auth/login', {
+        const response = await fetch('http://localhost:3000/api/auth/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -76,6 +64,7 @@ async function handleLogin(e) {
         if (response.ok) {
             alert('Login successful');
             localStorage.setItem('token', data.token);
+            //multi
             console.log(localStorage.getItem('token'));
             window.location.href = './dashboard.html';
             
@@ -95,7 +84,7 @@ async function handleSignup(e) {
     const password = document.getElementById('signup-password').value;
 
     try {
-        const response = await fetch('http:localhost:3000/api/auth/signup', {
+        const response = await fetch('http://localhost:3000/api/auth/signup', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -108,6 +97,8 @@ async function handleSignup(e) {
         if (response.ok) {
             alert('Signup successful');
             localStorage.setItem('token', data.token);
+            //multi
+            console.log(localStorage.getItem('token'));
             window.location.href = './dashboard.html';
         } else {
             alert(`Signup failed: ${data.message}`);
@@ -119,11 +110,32 @@ async function handleSignup(e) {
 }
 
 function scrollToAuth() {
-    const token = localStorage.getItem('token');
-    if (token) {
-      window.location.href = '/dashboard';
-    } else {
-      const authSection = document.getElementById('login');
-      authSection.scrollIntoView({ behavior: 'smooth' });
-    }
+const token = localStorage.getItem('token');
+if (token) {
+  window.location.href = '/dashboard';
+} else {
+  const authSection = document.getElementById('login');
+  authSection.scrollIntoView({ behavior: 'smooth' });
 }
+}
+
+document.addEventListener('DOMContentLoaded', async () => {
+    const container = document.getElementById('reviews-container');
+
+    try {
+      const response = await fetch('http://localhost:3000/api/review/reviews/');
+      const reviews = await response.json();
+
+      reviews.forEach(review => {
+        const card = document.createElement('div');
+        card.className = 'review-item';
+        card.innerHTML = `
+          <div class="name">${review.Name} : </div>  <!-- Added colon after Name -->
+          <div class="review">${review.Text}</div>
+        `;
+        container.appendChild(card);
+      });
+    } catch (error) {
+      console.error('Error fetching reviews:', error);
+    }
+});
