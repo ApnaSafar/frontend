@@ -8,6 +8,21 @@ document.addEventListener('DOMContentLoaded', () => {
         loginForm.addEventListener('submit', handleLogin);
         signupForm.addEventListener('submit',   handleSignup);
 
+        //custom-cursor
+        const cursor = document.getElementById('cursor');
+let cursorX = 0, cursorY = 0;
+
+const moveCursor = (e) => {
+  cursorX = e.clientX;
+  cursorY = e.clientY;
+  requestAnimationFrame(() => {
+    cursor.style.left = `${cursorX}px`;
+    cursor.style.top = `${cursorY}px`;
+  });
+};
+
+document.addEventListener('mousemove', moveCursor);
+
     // navbar toggle
     const overlay = document.querySelector("[data-overlay]");
     const navOpenBtn = document.querySelector("[data-nav-open-btn]");
