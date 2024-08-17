@@ -73,7 +73,7 @@
           <nav class="navbar" data-navbar>
             <div class="navbar-top">
               <a href="#" class="logo">
-                <img src="./images/logo-blue.svg" alt="Apna logo" />
+                <img src="./images/logo.svg" alt="Apna logo" />
               </a>
 
               <button
@@ -562,7 +562,28 @@
       </div>
     </section>
 
-    
+    <div class="main-container">
+      <h1 class="heading">OUR USER'S OPINION</h1>
+      <div class="reviews-container" id="reviews-container">
+        <div class="review-item">
+          <div class="name">John Doe :</div>
+          <div class="review">Great service! Highly recommend.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="partners-container">
+      <h2 class="partners-heading">OUR OFFICIAL PARTNER</h2>
+      <div class="partners-images">
+        <img src="./images/christmas_2012_new_6733.jpg" alt="Company 1 Logo" class="partner-logo" >
+        <img src="./images/rm330-pangrum-cdcover-02-ps.jpg" alt="Company 2 Logo" class="partner-logo">
+        <img src="./images/353622-PAWTBF-110.jpg" alt="Company 3 Logo" class="partner-logo">
+        <img src="./images/travel.jpg" alt="Company 4 Logo" class="partner-logo">
+        <img src="./images/17741272.jpg" alt="Company 5 Logo" class="partner-logo">
+        <img src="./images/new101.jpg" alt="Company" class="partner-logo">
+      </div>
+    </div>
+
     <footer class="footer">
       <div class="footer-top">
         <div class="container">
@@ -614,9 +635,27 @@
     const recipient = 'apnasafar435@gmail.com';
     const subject = 'Query from Travel Ticket Booking Platform';
     const body = 'Hello,\n\nI have a query regarding your travel ticket booking platform.\n\nThank you,\n[Your Name]';
+    const mailtoLink = `mailto:${recipient}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 
-    window.location.href = `mailto:${recipient}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-  });
+    // Check if the user is on a mobile device
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+    if (isMobile) {
+        // For mobile devices, use mailto link directly (opens in the default email app)
+        window.location.href = mailtoLink;
+    } else {
+        // For desktop, try opening Gmail in a new tab or window
+        const gmailLink = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(recipient)}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        
+        // Try to open Gmail, if not supported, fallback to mailto link
+        const gmailWindow = window.open(gmailLink, '_blank');
+        if (!gmailWindow || gmailWindow.closed || typeof gmailWindow.closed == 'undefined') {
+            // Fallback to mailto if Gmail doesn't open
+            window.location.href = mailtoLink;
+        }
+    }
+});
+
  </script>
     
     
