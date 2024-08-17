@@ -25,7 +25,7 @@ async function confirmFlight(sessionId, productId) {
             },
             body: JSON.stringify({ sessionId, productId })
         });
-        console.log(response.json());
+        //console.log(response.json());
 
         const success = await response.json();
         if (success) {
