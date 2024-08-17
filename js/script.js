@@ -144,12 +144,10 @@ document.addEventListener('DOMContentLoaded', async () => {
       reviews.forEach(review => {
         const card = document.createElement('div');
         card.className = 'review-item';
-
         card.innerHTML = `
           <div class="name">${review.Name} : </div>  <!-- Added colon after Name -->
           <div class="review">${review.Text}</div>
         `;
-
         container.appendChild(card);
       });
     } catch (error) {
