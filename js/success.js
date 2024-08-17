@@ -1,20 +1,53 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const token = localStorage.getItem('token')
+    const token = localStorage.getItem('token');
     console.log(token);
     const urlParams = new URLSearchParams(window.location.search);
     const type = urlParams.get('type');
     const sessionId = urlParams.get('session_id');
-    const producId = urlParams.get('product_id');
+    const productId = urlParams.get('product_id');
 
     switch (type) {
         case 'Flight':
-            confirmFlight(sessionId,producId);
+            confirmFlight(sessionId, productId);
             break;
     }
-        const downloadBtn = document.getElementById('downloadBtn');
-        downloadBtn.addEventListener('click', downloadReceipt);
-    
+
+    const downloadBtn = document.getElementById('downloadBtn');
+    downloadBtn.addEventListener('click', downloadReceipt);
+
+    const goBackBtn = document.getElementById('goBackBtn');
+    goBackBtn.addEventListener('click', () => {
+        window.location.href = 'http://localhost:3000/dashboard.html';
     });
+
+    // Simulate fetching transaction ID
+    setTimeout(() => {
+        document.getElementById('transactionId').textContent = Math.random().toString(36).substr(2, 9);
+    }, 1000);
+
+    // Timer functionality
+    const minutes = document.getElementById('min');
+    const seconds = document.getElementById('sec');
+    let sec = 120;
+
+    const allTime = function() {
+        let min, second;
+        min = Math.floor(sec / 60);
+        second = sec % 60;
+        minutes.innerHTML = min < 10 ? '0' + min : min;
+        seconds.innerHTML = second < 10 ? '0' + second : second;
+        if (sec > 0) {
+            sec--;
+        } else {
+            clearInterval(timerInterval);
+            // Redirect or perform action when timer ends
+            alert("Session expired. Redirecting to dashboard.");
+            window.location.href = 'http://localhost:3000/dashboard.html';
+        }
+    };
+
+    const timerInterval = setInterval(allTime, 1000);
+});
 
 async function confirmFlight(sessionId, productId) {
     const token = localStorage.getItem('token');
@@ -28,27 +61,16 @@ async function confirmFlight(sessionId, productId) {
             },
             body: JSON.stringify({ sessionId, productId })
         });
-        //console.log(response.json());
 
         const success = await response.json();
         if (success) {
             alert("Flight booked");
-        }
-        else {
+        } else {
             alert("Payment not successful, Try booking again");
         }
-
-        setTimeout(() => {
-            window.location.href = 'http://localhost:3000/dashboard.html'
-        }, 1000)
-    }
-    catch (err) {
+    } catch (err) {
         alert("Error booking flight", err);
         console.log(err);
-
-        // setTimeout(() => {
-        //     window.location.href = 'http://localhost:3000/dashboard.html'
-        // }, 1000)
     }
 }
 

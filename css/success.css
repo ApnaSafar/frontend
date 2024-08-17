@@ -5,9 +5,29 @@ body {
     padding: 0;
 }
 
-.container {
+.main-layout {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.left-section {
+    flex: 1;
     max-width: 380px;
-    margin: 50px auto;
+    margin-right: 20px;
+}
+
+.right-section {
+    flex: 1;
+    max-width: 380px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.container {
     overflow: hidden;
 }
 
@@ -141,34 +161,91 @@ body {
     }
 }
 
-@media (max-width: 480px) {
-    .container {
-        margin: 20px auto;
-    }
-    .paper-container {
-        height: auto;
-    }
-    .paper {
-        position: relative;
-        height: auto;
-        animation: none;
-    }
+.timer-container {
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
 }
 
-.download-btn {
-    display: block;
-    margin: 20px auto;
-    padding: 10px 20px;
+.timer-container h2 {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+#contain {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f0f0f0;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 60px;
+    height: 60px;
+    background-color: #4CAF50;
+    border-radius: 5px;
+    margin: 0 5px;
+}
+
+#min, #sec, #two {
+    font-size: 24px;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+.button-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.action-btn {
+    padding: 12px 20px;
     background-color: #4CAF50;
     color: white;
     border: none;
     border-radius: 5px;
     font-size: 16px;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: background-color 0.3s, transform 0.1s;
 }
 
-.download-btn:hover {
+.action-btn:hover {
     background-color: #45a049;
 }
 
+.action-btn:active {
+    transform: scale(0.98);
+}
+
+@media (max-width: 768px) {
+    .main-layout {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .left-section, .right-section {
+        margin-right: 0;
+        margin-bottom: 20px;
+        width: 100%;
+    }
+
+    .paper-container {
+        height: auto;
+    }
+
+    .paper {
+        position: relative;
+        height: auto;
+        animation: none;
+    }
+}
