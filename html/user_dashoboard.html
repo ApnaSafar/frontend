@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orange Travel Dashboard</title>
+    <link rel="stylesheet" href="../css/user_dashboard.css">
+</head>
+<body>
+    <header>
+        <h1>Orange Travel Dashboard</h1>
+    </header>
+    <main>
+        <section id="flight-tickets">
+            <h2>Flight Tickets</h2>
+            <div class="ticket-container">
+                <!-- Static template for flight ticket -->
+                <div class="ticket">
+                    <h3>Flight to Barcelona</h3>
+                    <p>Date: September 15, 2024</p>
+                    <p>Departure: New York (JFK) - 9:30 PM</p>
+                    <p>Arrival: Barcelona (BCN) - 11:00 AM</p>
+                    <button class="download-btn" onclick="downloadPDF('flight')">Download PDF</button>
+                </div>
+            </div>
+        </section>
+        <section id="hotel-reservations">
+            <h2>Hotel Reservations</h2>
+            <div class="reservation-container">
+                <!-- Static template for hotel reservation -->
+                <div class="reservation">
+                    <h3>Sunset Beach Resort</h3>
+                    <p>Check-in: September 16, 2024</p>
+                    <p>Check-out: September 23, 2024</p>
+                    <p>Room Type: Ocean View Suite</p>
+                    <button class="download-btn" onclick="downloadPDF('hotel')">Download PDF</button>
+                </div>
+            </div>
+        </section>
+    </main>
+    <script src="../js/user_dashboard.js"></script>
+</body>
+</html>

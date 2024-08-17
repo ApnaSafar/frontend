@@ -123,9 +123,9 @@ async function handleSearch(e) {
     const from = document.getElementById('from').value;
     const to = document.getElementById('to').value;
     const date = document.getElementById('date').value;
-    
+
     try {
-         //converting date to YYYY-MM-DD format
+        //converting date to YYYY-MM-DD format
         const [day, month, year] = date.split('-');
         const searchDate = `${year}-${month}-${day}`;
 
@@ -192,8 +192,8 @@ async function bookFlight(flightId) {
 
         if (response.ok) {
             alert('Ticket booked successfully');
-                // Refresh the flight search or redirect to user tickets
-            fetchUserTickets(); 
+            // Refresh the flight search or redirect to user tickets
+            fetchUserTickets();
         } else {
             alert(`Booking failed: ${data.message}`);
         }
@@ -206,10 +206,10 @@ async function bookFlight(flightId) {
 
 async function fetchUserTickets() {
     const token = localStorage.getItem('token');
-        if (!token) {
-            alert('Please log in to view your tickets');
-            return;
-        }
+    if (!token) {
+        alert('Please log in to view your tickets');
+        return;
+    }
     try {
         const response = await fetch('http://localhost:3000/api/user/tickets', {
             headers: {
@@ -225,7 +225,7 @@ async function fetchUserTickets() {
         displayUserTickets(tickets);
     } catch (error) {
         console.error('Error fetching tickets:', error);
-        alert('An error occurred while fetching your tickets'+ error.message);
+        alert('An error occurred while fetching your tickets' + error.message);
     }
 }
 
@@ -248,14 +248,14 @@ function displayUserTickets(tickets) {
     <p>Seat: ${ticket.seatNumber}</p>
     <p>Status: ${ticket.status}</p>
     <button class="btn btn-secondary btn-cancel-ticket" data-ticket-id="${ticket._id}">Cancel Ticket</button>
-`;      
+`;
         ul.appendChild(li);
     });
 
     ticketsContainer.appendChild(ul);
     // Add event listeners to the new "Cancel Ticket" buttons
     document.querySelectorAll('.btn-cancel-ticket').forEach(button => {
-        button.addEventListener('click', function(event) {
+        button.addEventListener('click', function (event) {
             event.preventDefault();
             const ticketId = this.getAttribute('data-ticket-id');
             cancelTicket(ticketId);
@@ -298,6 +298,39 @@ function logout() {
 }
 
 document.getElementById('logout-btn').addEventListener('click', logout);
+
+async function sendReview(e) {
+    e.preventDefault();
+
+    const name = document.getElementById('name').value;
+    const review = document.getElementById('review').value;
+
+    try {
+        const response = await fetch('http://localhost:3000/api/review/add-review', {
+          method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+             body: JSON.stringify({ Name: name, Text: review }),
+        });
+        
+        const data = await response.json();
+
+        if (response.ok) {
+            alert('Review submitted successfully!');
+            document.getElementById('review-form').reset(); // Clear the form
+        } else {
+            alert(`Failed to submit review: ${data.message}`);
+        }
+    } catch (error) {
+        console.error('Error submitting review:', error);
+        alert('An error occurred while submitting the review');
+    }
+}
+
+
+document.getElementById('logout-btn').addEventListener('click', logout);
+
 
 async function sendReview(e) {
     e.preventDefault();
@@ -464,4 +497,3 @@ async function getHotels() {
 // Call initPage when the script loads
 getHotels();
 document.getElementById('logout-btn').addEventListener('click', logout);
-

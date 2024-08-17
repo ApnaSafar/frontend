@@ -1,0 +1,134 @@
+:root {
+    --primary-color: #FF8C00;
+    --secondary-color: #FFA500;
+    --text-color: #333;
+    --background-color: #FFF5E6;
+    --card-background: #FFFFFF;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+header {
+    background-color: var(--primary-color);
+    color: white;
+    text-align: center;
+    padding: 1.5rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    margin: 0;
+    font-size: 2rem;
+}
+
+main {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+section {
+    margin-bottom: 2.5rem;
+}
+
+h2 {
+    color: var(--primary-color);
+    border-bottom: 2px solid var(--secondary-color);
+    padding-bottom: 0.5rem;
+    font-size: 1.5rem;
+}
+
+.ticket-container, .reservation-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+}
+
+.ticket, .reservation {
+    background-color: var(--card-background);
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+    width: 100%;
+    transition: transform 0.3s ease;
+}
+
+.ticket:hover, .reservation:hover {
+    transform: translateY(-5px);
+}
+
+.ticket h3, .reservation h3 {
+    margin-top: 0;
+    color: var(--primary-color);
+    font-size: 1.2rem;
+}
+
+.ticket p, .reservation p {
+    margin: 0.5rem 0;
+    font-size: 0.9rem;
+}
+
+.download-btn {
+    background-color: var(--secondary-color);
+    border: none;
+    color: white;
+    padding: 0.7rem 1.2rem;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 1rem;
+    margin-top: 1rem;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.download-btn:hover {
+    background-color: var(--primary-color);
+}
+
+.loading {
+    text-align: center;
+    padding: 2rem;
+    font-style: italic;
+    color: var(--text-color);
+}
+
+@media (min-width: 768px) {
+    .ticket, .reservation {
+        width: calc(50% - 0.75rem);
+    }
+
+    h1 {
+        font-size: 2.5rem;
+    }
+
+    h2 {
+        font-size: 1.8rem;
+    }
+
+    .ticket h3, .reservation h3 {
+        font-size: 1.4rem;
+    }
+
+    .ticket p, .reservation p {
+        font-size: 1rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    .ticket, .reservation {
+        width: calc(33.333% - 1rem);
+    }
+}
