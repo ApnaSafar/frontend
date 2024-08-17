@@ -71,8 +71,6 @@ button {
   font: inherit;
 }
 
-button { cursor: pointer; }
-
 input { width: 100%; }
 
 ion-icon { pointer-events: none; }
@@ -82,7 +80,9 @@ html {
   scroll-behavior: smooth;
 }
 
-body { background: var(--white); }
+body { background: var(--white);
+  cursor: none; /* Hide the default cursor */
+}
 
 
 /* REUSED STYLE */
@@ -422,7 +422,7 @@ body { background: var(--white); }
 .close-btn:focus {
   color: black;
   text-decoration: none;
-  cursor: pointer;
+  
 }
 
 .modal-content h2, .modal-content h3 {
@@ -435,7 +435,7 @@ body { background: var(--white); }
   color: #fff;
   padding: 10px;
   margin-top: 10px;
-  cursor: pointer;
+  
   border-radius: 4px;
 }
 
@@ -1220,4 +1220,17 @@ body { background: var(--white); }
 
 .partner-logo:hover {
   transform: scale(1.1); /* Slightly enlarge the image on hover */
+}
+
+/* custom cursor */
+#cursor {
+  width: 24px;
+  height: 25px;
+  border-radius: 50%;
+  background-color: #0ef;
+  position: fixed; /* Changed from absolute to fixed */
+  pointer-events: none; /* Ensures the cursor doesn't interfere with other elements */
+  z-index: 9999; /* Ensures the cursor is always on top */
+  transition: all linear 0.1s;
+  mix-blend-mode: difference;
 }
