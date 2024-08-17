@@ -203,15 +203,19 @@ async function bookFlight(flightId) {
             body: JSON.stringify({ flightId })
         });
 
-        const data = await response.json();
+        const sessionId = await response.json();
+        console.log(sessionId);
 
-        if (response.ok) {
-            alert('Ticket booked successfully');
-            // Refresh the flight search or redirect to user tickets
-            fetchUserTickets();
-        } else {
-            alert(`Booking failed: ${data.message}`);
-        }
+        // if (response.ok) {
+        //     alert('Ticket booked successfully');
+        //     // Refresh the flight search or redirect to user tickets
+        //     fetchUserTickets();
+        // } else {
+        //     alert(`Booking failed: ${data.message}`);
+        // }
+
+        const stripe=Stripe('pk_test_51PoUi8RtnWqAOK03Mc3XfgAuHYi1lFM7zPtXhTjNpO8fqo52Uy5oZBUGCNEAPBBBBEN6PAhkXJAFzw9CAcySZfRw00lcHLjpRd');
+        stripe.redirectToCheckout({ sessionId });
     } catch (error) {
         console.error('Booking error:', error);
         alert('An error occurred during booking' + error.message);
@@ -226,7 +230,7 @@ async function fetchUserTickets() {
         return;
     }
     try {
-        const response = await fetch('http://localhost:3000/api/user/tickets', {
+        const response = await fetch('http://localhost:3000/api/tickets/user', {
             headers: {
                 'x-auth-token': token
             }
