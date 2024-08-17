@@ -51,7 +51,7 @@ async function handleLogin(e) {
     const password = document.getElementById('login-password').value;
 
     try {
-        const response = await fetch('/api/auth/login', {
+        const response = await fetch('http://localhost:3000/api/auth/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -118,3 +118,24 @@ if (token) {
   authSection.scrollIntoView({ behavior: 'smooth' });
 }
 }
+
+document.addEventListener('DOMContentLoaded', async () => {
+    const container = document.getElementById('reviews-container');
+
+    try {
+      const response = await fetch('http://localhost:3000/api/review/reviews/');
+      const reviews = await response.json();
+
+      reviews.forEach(review => {
+        const card = document.createElement('div');
+        card.className = 'review-item';
+        card.innerHTML = `
+          <div class="name">${review.Name} : </div>  <!-- Added colon after Name -->
+          <div class="review">${review.Text}</div>
+        `;
+        container.appendChild(card);
+      });
+    } catch (error) {
+      console.error('Error fetching reviews:', error);
+    }
+});
