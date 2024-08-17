@@ -13,39 +13,78 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('logout-btn').addEventListener('click', logout);
 
     // Navbar toggle functionality
-    const overlay = document.querySelector("[data-overlay]");
-    const navOpenBtn = document.querySelector("[data-nav-open-btn]");
-    const navbar = document.querySelector("[data-navbar]");
-    const navCloseBtn = document.querySelector("[data-nav-close-btn]");
-    const navLinks = document.querySelectorAll("[data-nav-link]");
+const overlay = document.querySelector("[data-overlay]");
+const navOpenBtn = document.querySelector("[data-nav-open-btn]");
+const navbar = document.querySelector("[data-navbar]");
+const navCloseBtn = document.querySelector("[data-nav-close-btn]");
+const navLinks = document.querySelectorAll("[data-nav-link]");
+const heroTitle = document.querySelector(".hero-title");
+const header = document.querySelector("[data-header]");
+const headerTop = document.querySelector(".header-top");
+const headerBottom = document.querySelector(".header-bottom");
+const heroOverlay = document.querySelector(".hero::before");
 
-    const navElemArr = [navOpenBtn, navCloseBtn, overlay];
+const navElemArr = [navOpenBtn, navCloseBtn, overlay];
 
-    const navToggleEvent = function (elem) {
-        for (let i = 0; i < elem.length; i++) {
-            elem[i].addEventListener("click", function () {
-                navbar.classList.toggle("active");
-                overlay.classList.toggle("active");
-            });
+const navToggleEvent = function (elem) {
+    for (let i = 0; i < elem.length; i++) {
+        elem[i].addEventListener("click", function () {
+            overlay.classList.toggle("active");
+            if (overlay.classList.contains("active")) {
+                headerTop.style.display = "none";
+                headerBottom.style.display = "none";
+                heroTitle.style.display = "none";
+                heroOverlay.style.backgroundColor = "rgba(0, 0, 0, 0.8)"; // Darker when overlay is active
+            } else {
+                headerTop.style.display = "";
+                headerBottom.style.display = "";
+                heroTitle.style.display = "";
+                heroOverlay.style.backgroundColor = "rgba(0, 0, 0, 0.5)"; // Back to original translucency
+            }
+        });
+    }
+}
+
+navToggleEvent(navElemArr);
+navToggleEvent(navLinks);
+
+// Header sticky and go-to-top functionality
+const goTopBtn = document.querySelector("[data-go-top]");
+
+window.addEventListener("scroll", function () {
+    if (window.scrollY >= 200) {
+        header.classList.add("active");
+        goTopBtn.classList.add("active");
+        heroTitle.style.opacity = "0";
+        if (!overlay.classList.contains("active")) {
+            headerTop.style.display = "none";
+        }
+    } else {
+        header.classList.remove("active");
+        goTopBtn.classList.remove("active");
+        heroTitle.style.opacity = "1";
+        if (!overlay.classList.contains("active")) {
+            headerTop.style.display = "";
         }
     }
+});
 
-    navToggleEvent(navElemArr);
-    navToggleEvent(navLinks);
+        // Scroll down functionality
+const scrollDownBtn = document.querySelector('.scroll-down');
+const contentWrapper = document.querySelector('.content-wrapper');
 
-    // Header sticky and go-to-top functionality
-    const header = document.querySelector("[data-header]");
-    const goTopBtn = document.querySelector("[data-go-top]");
+scrollDownBtn.addEventListener('click', () => {
+  contentWrapper.scrollIntoView({ behavior: 'smooth' });
+});
 
-    window.addEventListener("scroll", function () {
-        if (window.scrollY >= 200) {
-            header.classList.add("active");
-            goTopBtn.classList.add("active");
-        } else {
-            header.classList.remove("active");
-            goTopBtn.classList.remove("active");
-        }
-    });
+// Hide scroll down button when scrolling down
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 100) {
+    scrollDownBtn.style.opacity = '0';
+  } else {
+    scrollDownBtn.style.opacity = '1';
+  }
+});
 });
 
 async function fetchCities() {
@@ -255,8 +294,40 @@ async function cancelTicket(ticketId) {
 
 function logout() {
     localStorage.removeItem('token');
-    window.location.href = '/index.html';
+    window.location.href = './index.html';
 }
+
+document.getElementById('logout-btn').addEventListener('click', logout);
+
+async function sendReview(e) {
+    e.preventDefault();
+
+    const name = document.getElementById('name').value;
+    const review = document.getElementById('review').value;
+
+    try {
+        const response = await fetch('http://localhost:3000/api/review/add-review', {
+          method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+             body: JSON.stringify({ Name: name, Text: review }),
+        });
+        
+        const data = await response.json();
+
+        if (response.ok) {
+            alert('Review submitted successfully!');
+            document.getElementById('review-form').reset(); // Clear the form
+        } else {
+            alert(`Failed to submit review: ${data.message}`);
+        }
+    } catch (error) {
+        console.error('Error submitting review:', error);
+        alert('An error occurred while submitting the review');
+    }
+}
+
 
 document.getElementById('logout-btn').addEventListener('click', logout);
 
