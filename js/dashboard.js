@@ -406,13 +406,17 @@ function createHotelCards(hotels) {
     container.innerHTML = ''; // Clear existing cards
 
     hotels.forEach(hotel => {
+        console.log(hotel);
         const card = document.createElement('div');
         card.className = 'card';
         card.onclick = () => openModal(hotel._id);
         card.innerHTML = `
-            <h2>${hotel.name}</h2>
-            <p>${hotel.location}</p>
-            <p>${hotel.description}</p>
+            <img src=${hotel.url} alt="${hotel.name}" class="card-image">
+            <div class="card-content">
+                <h2>${hotel.name}</h2>
+                <p>${hotel.location}</p>
+                <p>${hotel.description}</p>
+            </div>
         `;
         container.appendChild(card);
     });
