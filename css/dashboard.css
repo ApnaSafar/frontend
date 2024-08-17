@@ -78,8 +78,6 @@
     font: inherit;
   }
   
-  button { cursor: pointer; }
-  
   input { width: 100%; }
   
   ion-icon { pointer-events: none; }
@@ -89,7 +87,9 @@
     scroll-behavior: smooth;
   }
   
-  body { background: var(--white); }
+  body { background: var(--white);
+    cursor: none; /* Hide the default cursor */
+   }
   
   
   /* REUSED STYLE */
@@ -412,7 +412,7 @@
     border: none;
     font-size: 2rem;
     color: var(--white);
-    cursor: pointer;
+  
     animation: bounce 2s infinite;
     transition: color 0.3s ease;
   }
@@ -618,7 +618,7 @@
     display: inline-block;
     font-size: 16px;
     margin: 4px 2px;
-    cursor: pointer;
+  
     border-radius: 5px;
   }
   
@@ -1265,7 +1265,7 @@
   color: #fff;
   border: none;
   border-radius: 5px;
-  cursor: pointer;
+
   font-size: 16px;
 }
 
@@ -1303,7 +1303,7 @@ height: 150px; /* Increase the height here */
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   margin-right: 20px;
   padding: 20px;
-  cursor: pointer;
+
   transition: transform 0.3s ease;
 }
 
@@ -1333,7 +1333,7 @@ height: 150px; /* Increase the height here */
   border: none;
   padding: 10px 20px;
   margin: 0 10px;
-  cursor: pointer;
+
   border-radius: 4px;
 }
 
@@ -1363,7 +1363,7 @@ height: 150px; /* Increase the height here */
   float: right;
   font-size: 28px;
   font-weight: bold;
-  cursor: pointer;
+
 }
 
 .close:hover {
@@ -1384,8 +1384,20 @@ height: 150px; /* Increase the height here */
   color: white;
   border: none;
   padding: 10px 20px;
-  cursor: pointer;
+
   border-radius: 4px;
   width: 100%;
 }
 
+/* custom cursor */
+#cursor {
+  width: 24px;
+  height: 25px;
+  border-radius: 50%;
+  background-color: #0ef;
+  position: fixed; /* Changed from absolute to fixed */
+  pointer-events: none; /* Ensures the cursor doesn't interfere with other elements */
+  z-index: 9999; /* Ensures the cursor is always on top */
+  transition: all linear 0.1s;
+  mix-blend-mode: difference;
+}

@@ -12,6 +12,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.getElementById('logout-btn').addEventListener('click', logout);
 
+    //custom cursor
+    const cursor = document.getElementById('cursor');
+let cursorX = 0, cursorY = 0;
+
+const moveCursor = (e) => {
+  cursorX = e.clientX;
+  cursorY = e.clientY;
+  requestAnimationFrame(() => {
+    cursor.style.left = `${cursorX}px`;
+    cursor.style.top = `${cursorY}px`;
+  });
+};
+
+document.addEventListener('mousemove', moveCursor);
+
     // Navbar toggle functionality
 const overlay = document.querySelector("[data-overlay]");
 const navOpenBtn = document.querySelector("[data-nav-open-btn]");
