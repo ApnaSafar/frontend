@@ -15,92 +15,92 @@ document.addEventListener('DOMContentLoaded', () => {
 
     //custom cursor
     const cursor = document.getElementById('cursor');
-let cursorX = 0, cursorY = 0;
+    let cursorX = 0, cursorY = 0;
 
-const moveCursor = (e) => {
-  cursorX = e.clientX;
-  cursorY = e.clientY;
-  requestAnimationFrame(() => {
-    cursor.style.left = `${cursorX}px`;
-    cursor.style.top = `${cursorY}px`;
-  });
-};
+    const moveCursor = (e) => {
+        cursorX = e.clientX;
+        cursorY = e.clientY;
+        requestAnimationFrame(() => {
+            cursor.style.left = `${cursorX}px`;
+            cursor.style.top = `${cursorY}px`;
+        });
+    };
 
-document.addEventListener('mousemove', moveCursor);
+    document.addEventListener('mousemove', moveCursor);
 
     // Navbar toggle functionality
-const overlay = document.querySelector("[data-overlay]");
-const navOpenBtn = document.querySelector("[data-nav-open-btn]");
-const navbar = document.querySelector("[data-navbar]");
-const navCloseBtn = document.querySelector("[data-nav-close-btn]");
-const navLinks = document.querySelectorAll("[data-nav-link]");
-const heroTitle = document.querySelector(".hero-title");
-const header = document.querySelector("[data-header]");
-const headerTop = document.querySelector(".header-top");
-const headerBottom = document.querySelector(".header-bottom");
-const heroOverlay = document.querySelector(".hero::before");
+    const overlay = document.querySelector("[data-overlay]");
+    const navOpenBtn = document.querySelector("[data-nav-open-btn]");
+    const navbar = document.querySelector("[data-navbar]");
+    const navCloseBtn = document.querySelector("[data-nav-close-btn]");
+    const navLinks = document.querySelectorAll("[data-nav-link]");
+    const heroTitle = document.querySelector(".hero-title");
+    const header = document.querySelector("[data-header]");
+    const headerTop = document.querySelector(".header-top");
+    const headerBottom = document.querySelector(".header-bottom");
+    const heroOverlay = document.querySelector(".hero::before");
 
-const navElemArr = [navOpenBtn, navCloseBtn, overlay];
+    const navElemArr = [navOpenBtn, navCloseBtn, overlay];
 
-const navToggleEvent = function (elem) {
-    for (let i = 0; i < elem.length; i++) {
-        elem[i].addEventListener("click", function () {
-            overlay.classList.toggle("active");
-            if (overlay.classList.contains("active")) {
+    const navToggleEvent = function (elem) {
+        for (let i = 0; i < elem.length; i++) {
+            elem[i].addEventListener("click", function () {
+                overlay.classList.toggle("active");
+                if (overlay.classList.contains("active")) {
+                    headerTop.style.display = "none";
+                    headerBottom.style.display = "none";
+                    heroTitle.style.display = "none";
+                    heroOverlay.style.backgroundColor = "rgba(0, 0, 0, 0.8)"; // Darker when overlay is active
+                } else {
+                    headerTop.style.display = "";
+                    headerBottom.style.display = "";
+                    heroTitle.style.display = "";
+                    heroOverlay.style.backgroundColor = "rgba(0, 0, 0, 0.5)"; // Back to original translucency
+                }
+            });
+        }
+    }
+
+    navToggleEvent(navElemArr);
+    navToggleEvent(navLinks);
+
+    // Header sticky and go-to-top functionality
+    const goTopBtn = document.querySelector("[data-go-top]");
+
+    window.addEventListener("scroll", function () {
+        if (window.scrollY >= 200) {
+            header.classList.add("active");
+            goTopBtn.classList.add("active");
+            heroTitle.style.opacity = "0";
+            if (!overlay.classList.contains("active")) {
                 headerTop.style.display = "none";
-                headerBottom.style.display = "none";
-                heroTitle.style.display = "none";
-                heroOverlay.style.backgroundColor = "rgba(0, 0, 0, 0.8)"; // Darker when overlay is active
-            } else {
-                headerTop.style.display = "";
-                headerBottom.style.display = "";
-                heroTitle.style.display = "";
-                heroOverlay.style.backgroundColor = "rgba(0, 0, 0, 0.5)"; // Back to original translucency
             }
-        });
-    }
-}
-
-navToggleEvent(navElemArr);
-navToggleEvent(navLinks);
-
-// Header sticky and go-to-top functionality
-const goTopBtn = document.querySelector("[data-go-top]");
-
-window.addEventListener("scroll", function () {
-    if (window.scrollY >= 200) {
-        header.classList.add("active");
-        goTopBtn.classList.add("active");
-        heroTitle.style.opacity = "0";
-        if (!overlay.classList.contains("active")) {
-            headerTop.style.display = "none";
+        } else {
+            header.classList.remove("active");
+            goTopBtn.classList.remove("active");
+            heroTitle.style.opacity = "1";
+            if (!overlay.classList.contains("active")) {
+                headerTop.style.display = "";
+            }
         }
-    } else {
-        header.classList.remove("active");
-        goTopBtn.classList.remove("active");
-        heroTitle.style.opacity = "1";
-        if (!overlay.classList.contains("active")) {
-            headerTop.style.display = "";
+    });
+
+    // Scroll down functionality
+    const scrollDownBtn = document.querySelector('.scroll-down');
+    const contentWrapper = document.querySelector('.content-wrapper');
+
+    scrollDownBtn.addEventListener('click', () => {
+        contentWrapper.scrollIntoView({ behavior: 'smooth' });
+    });
+
+    // Hide scroll down button when scrolling down
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 100) {
+            scrollDownBtn.style.opacity = '0';
+        } else {
+            scrollDownBtn.style.opacity = '1';
         }
-    }
-});
-
-        // Scroll down functionality
-const scrollDownBtn = document.querySelector('.scroll-down');
-const contentWrapper = document.querySelector('.content-wrapper');
-
-scrollDownBtn.addEventListener('click', () => {
-  contentWrapper.scrollIntoView({ behavior: 'smooth' });
-});
-
-// Hide scroll down button when scrolling down
-window.addEventListener('scroll', () => {
-  if (window.scrollY > 100) {
-    scrollDownBtn.style.opacity = '0';
-  } else {
-    scrollDownBtn.style.opacity = '1';
-  }
-});
+    });
 });
 
 async function fetchCities() {
@@ -215,7 +215,7 @@ async function bookFlight(flightId) {
         //     alert(`Booking failed: ${data.message}`);
         // }
 
-        const stripe=Stripe('pk_test_51PoUi8RtnWqAOK03Mc3XfgAuHYi1lFM7zPtXhTjNpO8fqo52Uy5oZBUGCNEAPBBBBEN6PAhkXJAFzw9CAcySZfRw00lcHLjpRd');
+        const stripe = Stripe('pk_test_51PoUi8RtnWqAOK03Mc3XfgAuHYi1lFM7zPtXhTjNpO8fqo52Uy5oZBUGCNEAPBBBBEN6PAhkXJAFzw9CAcySZfRw00lcHLjpRd');
         stripe.redirectToCheckout({ sessionId });
     } catch (error) {
         console.error('Booking error:', error);
@@ -327,13 +327,13 @@ async function sendReview(e) {
 
     try {
         const response = await fetch('http://localhost:3000/api/review/add-review', {
-          method: 'POST',
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-             body: JSON.stringify({ Name: name, Text: review }),
+            body: JSON.stringify({ Name: name, Text: review }),
         });
-        
+
         const data = await response.json();
 
         if (response.ok) {
@@ -360,13 +360,13 @@ async function sendReview(e) {
 
     try {
         const response = await fetch('http://localhost:3000/api/review/add-review', {
-          method: 'POST',
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-             body: JSON.stringify({ Name: name, Text: review }),
+            body: JSON.stringify({ Name: name, Text: review }),
         });
-        
+
         const data = await response.json();
 
         if (response.ok) {
@@ -473,15 +473,31 @@ function closeModal() {
 }
 
 async function bookNow() {
+    const token = localStorage.getItem('token')
     const hotelName = document.getElementById('modalHotelName').textContent;
-    const roomType = document.getElementById('roomType').value;
+    const roomTypeSelect = document.getElementById('roomType');
+    const roomType = currentHotel.roomTypes[roomTypeSelect.selectedIndex].type;
     const checkIn = document.getElementById('checkIn').value;
     const checkOut = document.getElementById('checkOut').value;
     const guests = document.getElementById('guests').value;
     const price = document.getElementById('roomPrice').textContent;
 
+    console.log(JSON.stringify({
+        hotelName,
+        roomType,
+        checkIn,
+        checkOut,
+        guests,
+        price
+    }),)
+
     try {
-        const response = await fetch('your-api-endpoint/bookings', {
+        const response = await fetch('http://localhost:3000/api/hotels/reserv/create', {
+            method: 'POST',
+            headers: {
+                'x-auth-token': token,
+                'Content-Type': 'application/json'
+            },
             body: JSON.stringify({
                 hotelName,
                 roomType,
@@ -492,12 +508,10 @@ async function bookNow() {
             }),
         });
 
-        if (response.ok) {
-            alert('Booking submitted successfully!');
-            closeModal();
-        } else {
-            alert('Failed to submit booking. Please try again.');
-        }
+        const { sessionId } = await response.json();
+        console.log(sessionId)
+        const stripe = Stripe('pk_test_51PoUi8RtnWqAOK03Mc3XfgAuHYi1lFM7zPtXhTjNpO8fqo52Uy5oZBUGCNEAPBBBBEN6PAhkXJAFzw9CAcySZfRw00lcHLjpRd');
+        stripe.redirectToCheckout({ sessionId });
     } catch (error) {
         console.error('Error submitting booking:', error);
         alert('An error occurred. Please try again later.');
@@ -510,7 +524,7 @@ function hotel_card_scrollLeft() {
 
 function hotel_card_scrollRight() {
     document.getElementById('cardContainer').scrollBy({ left: 200, behavior: 'smooth' });
-  }
+}
 
 // Initialize the page
 async function getHotels() {
