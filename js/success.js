@@ -25,28 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById('transactionId').textContent = Math.random().toString(36).substr(2, 9);
     }, 1000);
 
-    // Timer functionality
-    const minutes = document.getElementById('min');
-    const seconds = document.getElementById('sec');
-    let sec = 120;
-
-    const allTime = function() {
-        let min, second;
-        min = Math.floor(sec / 60);
-        second = sec % 60;
-        minutes.innerHTML = min < 10 ? '0' + min : min;
-        seconds.innerHTML = second < 10 ? '0' + second : second;
-        if (sec > 0) {
-            sec--;
-        } else {
-            clearInterval(timerInterval);
-            // Redirect or perform action when timer ends
-            alert("Session expired. Redirecting to dashboard.");
-            window.location.href = 'http://localhost:3000/dashboard.html';
-        }
-    };
-
-    const timerInterval = setInterval(allTime, 1000);
+   
 });
 
 async function confirmFlight(sessionId, productId) {
@@ -79,16 +58,16 @@ function downloadReceipt() {
     const canvas = document.createElement('canvas');
     const ctx = canvas.getContext('2d');
 
-    // Set canvas size to match the paper container
-    canvas.width = paperContainer.offsetWidth * 2;  // Double for better resolution
+    // setting canvas size to match the paper container
+    canvas.width = paperContainer.offsetWidth * 2;  //making better resolution
     canvas.height = paperContainer.offsetHeight * 2;
     ctx.scale(2, 2);
 
-    // Draw white background
+    //white background
     ctx.fillStyle = '#ffffff';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    // Draw success icon
+    //success icon
     const successIcon = paperContainer.querySelector('.success-icon');
     if (successIcon) {
         ctx.fillStyle = '#4CAF50';
@@ -101,43 +80,44 @@ function downloadReceipt() {
         ctx.fillText('✓', paperContainer.offsetWidth / 2, 65);
     }
 
-    // Draw text content
+    //text content
     ctx.fillStyle = '#000000';
     ctx.textAlign = 'center';
     
-    // Title
+    // title
     ctx.font = 'bold 24px Arial';
     ctx.fillText('Payment Complete', paperContainer.offsetWidth / 2, 120);
 
-    // Description
+    // description
     ctx.font = '16px Arial';
     ctx.textAlign = 'left';
     wrapText(ctx, 'Thank you for completing the payment! You will shortly receive an email confirmation of your payment.', 20, 160, paperContainer.offsetWidth - 40, 20);
 
-    // Transaction ID
+    // transaction ID
     ctx.font = 'bold 18px Arial';
     ctx.fillText('Transaction ID', 20, 240);
     ctx.font = 'bold 24px Arial';
     ctx.fillText(document.getElementById('transactionId').textContent, 20, 270);
 
-    // Thank You
+    // thank You
     ctx.fillStyle = '#4CAF50';
     ctx.font = 'bold 18px Arial';
     ctx.fillText('Thank You!', 20, 310);
 
-    // Draw bottom edge (zigzag)
+    // bottom edge zz
     ctx.fillStyle = '#e0e0e0';
     ctx.beginPath();
     for (let x = 0; x < paperContainer.offsetWidth; x += 20) {
         ctx.lineTo(x, paperContainer.offsetHeight - 5);
         ctx.lineTo(x + 10, paperContainer.offsetHeight);
     }
+
     ctx.lineTo(paperContainer.offsetWidth, paperContainer.offsetHeight);
     ctx.lineTo(0, paperContainer.offsetHeight);
     ctx.closePath();
     ctx.fill();
 
-    // Convert canvas to image and trigger download
+   // canvas to image and download
     const dataUrl = canvas.toDataURL('image/png');
     const link = document.createElement('a');
     link.download = 'payment_receipt.png';
