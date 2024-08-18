@@ -501,6 +501,7 @@
     border-radius: 50px;
   }
   
+  /* travel details  tickets and reservations */
 
   .tickets-and-reservations {
     background-image: url('../images/travel-bg.jpg'); /* Replace with your background image */
@@ -509,6 +510,20 @@
     position: relative;
     padding: var(--section-padding) 0;
   }
+  
+  .tickets-and-reservations .section-title {
+    
+    background-color: rgba(255, 255, 255, 0.7); /* Semi-transparent white background */
+    border-radius: 8px; /* Rounded corners */
+    padding: 10px 20px; /* Padding for spacing around the text */
+    display: inline-block; /* Make the background fit around the text */
+    text-align: center; /* Center-align the text within the box */
+    margin-left: auto; /* Automatically adjust the left margin */
+    margin-right: auto; /* Automatically adjust the right margin */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow for added depth */
+  }
+
+  
   
   .tickets-and-reservations::before {
     content: '';
@@ -527,15 +542,15 @@
     backdrop-filter: blur(5px); /* For other modern browsers */
 }
 
-
-  
   .tickets-and-reservations .container {
+    display: flex;
+  flex-direction: column;
+    /* align-items: center; Centers horizontally */
     position: relative;
     z-index: 1;
   }
   
-  /* Rest of the CSS remains the same */
-  
+
   .tickets-and-reservations .container {
     position: relative;
     z-index: 1;
@@ -594,6 +609,8 @@
       width: calc(50% - 20px);
     }
   }
+
+
   /* search result */
   
   #search-results ul {
@@ -732,7 +749,270 @@
   
   .popular-card :is(.card-subtitle, .card-title) > a { color: inherit; }
   
-  
+  /* packages */
+
+#package-header {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.1);
+  text-align: center;
+  border-radius: 10px;
+  margin-bottom: 30px; 
+}
+
+#package-header .section-subtitle {
+  font-size: 16px;
+  color: var(--bright-navy-blue);
+  margin-bottom: 10px;
+}
+
+#package-header .section-title {
+  font-size: 28px;
+  color: #62a6ff;
+  margin: 0 0 15px;
+}
+
+#package-header .section-text {
+  font-size: 16px;
+  color: #b9f3ff;
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+  #package-header {
+    padding: 15px;
+    margin-bottom: 20px; 
+  }
+
+  #package-header .section-title {
+    font-size: 24px;
+  }
+
+  #package-header .section-text {
+    font-size: 14px;
+  }
+}
+
+
+.package-list { margin-bottom: 40px; }
+
+.package-list > li:not(:last-child) { margin-bottom: 30px; }
+
+.package-card {
+  background: var(--cultured);
+  overflow: hidden;
+  border-radius: 15px;
+}
+
+.package-card .card-banner { height: 250px; }
+
+.package-card .card-banner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.package-card .card-content { padding: 30px 20px; }
+
+.package-card .card-title { margin-bottom: 15px; }
+
+.package-card .card-text {
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.card-meta-list {
+  background: var(--white);
+  max-width: max-content;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  padding: 8px;
+  box-shadow: 0 0 5px hsla(0, 0%, 0%, 0.15);
+  border-radius: 50px;
+}
+
+.card-meta-item { position: relative; }
+
+.card-meta-item:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  top: 4px;
+  right: -1px;
+  bottom: 4px;
+  width: 1px;
+  background: hsla(0, 0%, 0%, 0.3);
+}
+
+.meta-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  padding-inline: 9px;
+  color: var(--black-coral);
+  font-size: var(--fs-8);
+}
+
+.meta-box > ion-icon {
+  color: var(--bright-navy-blue);
+  font-size: 13px;
+}
+
+.package-card .card-price {
+  background: var(--united-nations-blue);
+  color: var(--white);
+  padding: 25px 20px;
+  text-align: center;
+}
+
+.package-card .card-price .wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 5px 15px;
+  margin-bottom: 10px;
+}
+
+.package-card .card-price .reviews { font-size: var(--fs-5); }
+
+.package-card .card-rating {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1px;
+  font-size: 14px;
+}
+
+.package-card .card-rating ion-icon:last-child { color: hsl(0, 0%, 80%); }
+
+.package-card .price {
+  font-size: var(--fs-2);
+  font-family: var(--ff-montserrat);
+  font-weight: var(--fw-800);
+  margin-bottom: 20px;
+}
+
+.package-card .price span {
+  font-size: var(--fs-7);
+  font-weight: initial;
+}
+
+.package .btn { margin-inline: auto; }
+
+
+.package-bookings-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.package-bookings-title {
+  font-size: var(--fs-2);
+  color: var(--bright-navy-blue);
+  margin-bottom: 10px;
+}
+
+#package-bookings-list {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.package-bookings-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.package-booking-item {
+  background-color: var(--white);
+  border-radius: var(--radius-15);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-bottom: 20px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.package-booking-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.package-booking-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 5px;
+  height: 100%;
+  background-color: var(--bright-navy-blue);
+  transform: scaleY(0);
+  transition: transform 0.3s ease;
+}
+
+.package-booking-item:hover::before {
+  transform: scaleY(1);
+}
+
+.package-booking-item h3 {
+  font-size: var(--fs-4);
+  color: var(--gunmetal);
+  margin-bottom: 10px;
+}
+
+.package-booking-item p {
+  font-size: var(--fs-6);
+  color: var(--black-coral);
+  margin-bottom: 5px;
+}
+
+.status {
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.status-pending {
+  color: var(--marigold);
+}
+
+.status-confirmed {
+  color: var(--bright-navy-blue);
+}
+
+.status-cancelled {
+  color: var(--coral);
+}
+
+.cancel-booking-btn {
+  background-color: var(--coral);
+  color: var(--white);
+  border: none;
+  padding: 8px 15px;
+  border-radius: 20px;
+  font-size: var(--fs-7);
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 10px;
+}
+
+.cancel-booking-btn:hover {
+  background-color: var(--marigold);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.package-booking-item {
+  animation: fadeIn 0.5s ease forwards;
+}
+
   
   /* footer */
   
@@ -1387,6 +1667,125 @@ height: 150px; /* Increase the height here */
 
   border-radius: 4px;
   width: 100%;
+}
+
+/*updated footer */
+#footerg {
+  background-image: url('../images/footer.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  position: relative;
+  padding: 80px 0 40px;
+  color: #021d42;
+  animation: mountainFloat 3s ease-in-out infinite alternate;
+}
+
+#footerg::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: inherit;
+  filter: blur(8px);
+  opacity: 0.8;
+  z-index: -1;
+}
+
+#footerg .footer-top .container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 40px;
+  position: relative;
+  z-index: 1;
+}
+
+#footerg .footer-brand, 
+#footerg .footer-contact, 
+#footerg .footer-form {
+  flex: 1 1 300px;
+}
+
+/* Increase the image size */
+#footerg .footer-brand img {
+  width: 250px; /* Increase the size as needed */
+  filter: brightness(0) invert(1);
+}
+
+/* Increase font size and make text bolder */
+#footerg .footer-text, 
+#footerg .footer-link, 
+#footerg .contact-item, 
+#footerg .form-text {
+  font-size: 19px; /* Increase font size */
+  line-height: 1.8;
+  margin-bottom: 15px;
+}
+
+#footerg .footer-list-title {
+  font-size: 28px; /* Increase font size */
+  font-weight: 900; /* Make text thicker */
+  margin-bottom: 20px;
+  color: #0d2460;
+}
+
+#footerg .contact-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+#footerg .contact-item ion-icon {
+  font-size: 28px; /* Increase icon size */
+  color: var(--bright-navy-blue);
+}
+
+/* Increase button size and text */
+#footerg .btn-secondary {
+  background: var(--bright-navy-blue);
+  color: #ffffff;
+  padding: 15px 30px; /* Increase padding for larger button */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  font-size: 20px; /* Increase font size */
+  font-weight: bold; /* Make button text bolder */
+}
+
+#footerg .btn-secondary:hover {
+  background: var(--yale-blue);
+}
+
+#footerg .footer-bottom {
+  background: rgba(0, 0, 0, 0.5);
+  padding: 20px 0;
+  text-align: center;
+  margin-top: 40px;
+}
+
+
+#footerg .copyright {
+  color: #ffffff;
+  font-size: 18px; /* Increase font size */
+  font-weight: bold; /* Make text bolder */
+  margin: 0; /* Remove default margin */
+  white-space: nowrap; /* Prevents text from wrapping to the next line */
+  text-align: center; /* Center the text */
+}
+
+@media (max-width: 768px) {
+  #footerg .footer-top .container {
+      flex-direction: column;
+  }
+}
+
+@keyframes mountainFloat {
+  0% { background-position: 0 0; }
+  100% { background-position: 0 10px; }
 }
 
 
