@@ -6,6 +6,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const sessionId = urlParams.get('session_id');
     const productId = urlParams.get('product_id');
 
+
+
     switch (type) {
         case 'Flight':
             confirmFlight(sessionId, productId);
@@ -14,6 +16,9 @@ document.addEventListener("DOMContentLoaded", () => {
         case 'Reservation':
             confirmReservation(sessionId, productId);
             break;
+      case 'Package':
+        confirmPackageBooking(sessionId, productId);
+      break;
     }
 
     const downloadBtn = document.getElementById('downloadBtn');
@@ -29,9 +34,42 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById('transactionId').textContent = Math.random().toString(36).substr(2, 9);
     }, 1000);
 
+    
    
 });
 
+//package booking confirmation
+async function confirmPackageBooking(sessionId, productId) {
+    const token = localStorage.getItem('token');
+    try {
+        const response = await fetch('http://localhost:3000/api/packages/success-book', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'x-auth-token': token
+            },
+            body: JSON.stringify({ sessionId, productId })
+        });
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const result = await response.json();
+        console.log('API Result:', result);
+
+        if (result.success) {
+            alert("Package booked successfully");
+        } else {
+            alert(result.message || "There was an issue confirming your package booking. Please contact support.");
+        }
+    } catch (err) {
+        console.error("Error confirming package booking:", err);
+        alert("An error occurred while confirming your package booking. Please contact support.");
+    }
+}
+
+//flight booking confirmation
 async function confirmFlight(sessionId, productId) {
     const token = localStorage.getItem('token');
     console.log(token);
@@ -46,13 +84,13 @@ async function confirmFlight(sessionId, productId) {
         });
 
         const success = await response.json();
-        if (success) {
-            alert("Flight booked");
+        if (success.success) {
+            alert("Flight booked successfully");
         } else {
-            alert("Payment not successful, Try booking again");
+            alert("Payment not successful. Please try booking again.");
         }
     } catch (err) {
-        alert("Error booking flight", err);
+        alert("Error booking flight: " + err.message);
         console.log(err);
     }
 }

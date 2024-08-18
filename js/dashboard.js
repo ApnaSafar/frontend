@@ -13,20 +13,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.getElementById('logout-btn').addEventListener('click', logout);
 
-    //custom cursor
-    const cursor = document.getElementById('cursor');
-    let cursorX = 0, cursorY = 0;
-
-    const moveCursor = (e) => {
-        cursorX = e.clientX;
-        cursorY = e.clientY;
-        requestAnimationFrame(() => {
-            cursor.style.left = `${cursorX}px`;
-            cursor.style.top = `${cursorY}px`;
-        });
-    };
-
-    document.addEventListener('mousemove', moveCursor);
+    fetchUserPackageBookings();
+    setupPackageBookingButtons();
 
     // Navbar toggle functionality
     const overlay = document.querySelector("[data-overlay]");
@@ -535,3 +523,153 @@ async function getHotels() {
 // Call initPage when the script loads
 getHotels();
 document.getElementById('logout-btn').addEventListener('click', logout);
+
+// packages booking
+
+
+function setupPackageBookingButtons() {
+    document.querySelectorAll('.btn-secondary').forEach(button => {
+        button.addEventListener('click', (event) => {
+            event.preventDefault();
+            const packageCard = event.target.closest('.package-card');
+            const packageId = packageCard.dataset.packageId;
+            bookPackage(packageId);
+        });
+    });
+}
+
+async function bookPackage(packageId) {
+    const token = localStorage.getItem('token');
+    if (!token) {
+        alert('Please log in to book a package');
+        return;
+    }
+
+    try {
+        const response = await fetch('http://localhost:3000/api/packages/book', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'x-auth-token': token
+            },
+            body: JSON.stringify({ packageId })
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const { sessionId } = await response.json();
+        console.log('Stripe Session ID:', sessionId);
+
+        const stripe = Stripe('pk_test_51PoUi8RtnWqAOK03Mc3XfgAuHYi1lFM7zPtXhTjNpO8fqo52Uy5oZBUGCNEAPBBBBEN6PAhkXJAFzw9CAcySZfRw00lcHLjpRd');
+        const { error } = await stripe.redirectToCheckout({
+            sessionId: sessionId
+        });
+        if (error) {
+            console.error('Stripe redirect error:', error);
+            alert('An error occurred during checkout: ' + error.message);
+        }
+    } catch (error) {
+        console.error('Booking error:', error);
+        alert('An error occurred during booking: ' + error.message);
+    } 
+}
+
+async function fetchUserPackageBookings() {
+    const token = localStorage.getItem('token');
+    if (!token) {
+        console.log('User not logged in, skipping package bookings fetch');
+        return;
+    }
+    try {
+        const response = await fetch('http://localhost:3000/api/packages/user-bookings', {
+            headers: {
+                'x-auth-token': token
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const bookings = await response.json();
+        displayUserPackageBookings(bookings);
+    } catch (error) {
+        console.error('Error fetching package bookings:', error);
+        alert('An error occurred while fetching your package bookings: ' + error.message);
+    }
+}
+
+function displayUserPackageBookings(bookings) {
+    const bookingsContainer = document.getElementById('package-bookings-list');
+    if (!bookingsContainer) {
+        console.error('package-bookings-list element not found');
+        return;
+    }
+    bookingsContainer.innerHTML = '';
+
+    if (bookings.length === 0) {
+        bookingsContainer.innerHTML = '<p>No package bookings found.</p>';
+        return;
+    }
+
+    const ul = document.createElement('ul');
+    ul.className = 'package-bookings-list';
+
+    bookings.forEach(booking => {
+        const li = document.createElement('li');
+        li.className = 'package-booking-item';
+        li.innerHTML = `
+            <h3>${booking.package.name}</h3>
+            <p><strong>Location:</strong> ${booking.package.location}</p>
+            <p><strong>Duration:</strong> ${booking.package.duration}</p>
+            <p><strong>Price:</strong> ₹${booking.package.price}</p>
+            <p><strong>Status:</strong> <span class="status status-${booking.status.toLowerCase()}">${booking.status}</span></p>
+            <p><strong>Booking Date:</strong> ${new Date(booking.bookingDate).toLocaleString()}</p>
+            ${booking.status === 'confirmed' ? `<button class="cancel-booking-btn" data-booking-id="${booking._id}">Cancel Booking</button>` : ''}
+        `;
+        ul.appendChild(li);
+    });
+
+    bookingsContainer.appendChild(ul);
+
+    // Add event listeners for cancel buttons
+    document.querySelectorAll('.cancel-booking-btn').forEach(button => {
+        button.addEventListener('click', function() {
+            cancelPackageBooking(this.dataset.bookingId);
+        });
+    });
+}
+
+async function cancelPackageBooking(bookingId) {
+    const token = localStorage.getItem('token');
+    if (!token) {
+        alert('Please log in to cancel a booking');
+        return;
+    }
+
+    try {
+        const response = await fetch(`http://localhost:3000/api/packages/cancel/${bookingId}`, {
+            method: 'PUT',
+            headers: {
+                'x-auth-token': token
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const result = await response.json();
+        if (result.success) {
+            alert('Booking cancelled successfully');
+            fetchUserPackageBookings(); // Refresh the bookings list
+        } else {
+            alert('Failed to cancel booking: ' + result.message);
+        }
+    } catch (error) {
+        console.error('Error cancelling booking:', error);
+        alert('An error occurred while cancelling the booking: ' + error.message);
+    }
+}

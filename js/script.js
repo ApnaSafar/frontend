@@ -8,20 +8,6 @@ document.addEventListener('DOMContentLoaded', () => {
         loginForm.addEventListener('submit', handleLogin);
         signupForm.addEventListener('submit',   handleSignup);
 
-        //custom-cursor
-        const cursor = document.getElementById('cursor');
-let cursorX = 0, cursorY = 0;
-
-const moveCursor = (e) => {
-  cursorX = e.clientX;
-  cursorY = e.clientY;
-  requestAnimationFrame(() => {
-    cursor.style.left = `${cursorX}px`;
-    cursor.style.top = `${cursorY}px`;
-  });
-};
-
-document.addEventListener('mousemove', moveCursor);
 
     // navbar toggle
     const overlay = document.querySelector("[data-overlay]");
@@ -134,23 +120,35 @@ if (token) {
 }
 }
 
+// reviews
 document.addEventListener('DOMContentLoaded', async () => {
     const container = document.getElementById('reviews-container');
-
+  
     try {
       const response = await fetch('http://localhost:3000/api/review/reviews/');
       const reviews = await response.json();
-
-      reviews.forEach(review => {
+  
+      // Create double the amount of reviews for seamless looping
+      const doubledReviews = [...reviews, ...reviews];
+  
+      doubledReviews.forEach(review => {
         const card = document.createElement('div');
         card.className = 'review-item';
         card.innerHTML = `
-          <div class="name">${review.Name} : </div>  <!-- Added colon after Name -->
+          <div class="name">${review.Name}:</div>
           <div class="review">${review.Text}</div>
         `;
         container.appendChild(card);
       });
+  
+      // Adjust animation duration based on the number of reviews
+      const marquee = document.querySelector('.marquee');
+      const reviewCount = reviews.length;
+      marquee.style.animationDuration = `${reviewCount * 5}s`; // 5 seconds per review
     } catch (error) {
       console.error('Error fetching reviews:', error);
     }
-});
+  });
+
+
+  
