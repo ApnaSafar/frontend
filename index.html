@@ -41,13 +41,10 @@
 
           <div class="header-btn-group">
             <button class="search-btn" aria-label="Search">
-              <ion-icon name="search"></ion-icon>
+              <ion-icon name="search-outline"></ion-icon>
             </button>
-            <button
-              class="nav-open-btn"
-              aria-label="Open Menu"
-              data-nav-open-btn
-            >
+            
+            <button class="nav-open-btn" aria-label="Open Menu" data-nav-open-btn>
               <ion-icon name="menu-outline"></ion-icon>
             </button>
           </div>
@@ -70,7 +67,7 @@
             </li>  
           </ul>
 
-          <nav class="navbar" data-navbar>
+          <nav id="main-navbar" class="navbar" data-navbar>
             <div class="navbar-top">
               <a href="#" class="logo">
                 <img src="./images/logo.svg" alt="Apna logo" />
@@ -91,26 +88,24 @@
               </li>
 
               <li>
-                <a href="#" class="navbar-link" data-nav-link>about us</a>
-              </li>
-
-              <li>
                 <a href="#destination" class="navbar-link" data-nav-link>destination</a>
               </li>
-  
               <li>
-                <a href="#package" class="navbar-link" data-nav-link>packages</a>
+                <a href="#login" class="navbar-link" data-nav-link>Login</a>
               </li>
-  
-            
-  
               <li>
-                <a href="#contact" class="navbar-link" data-nav-link>contact us</a>
+                <a href="#signup" class="navbar-link" data-nav-link>SignUp</a>
+              </li>
+              <li>
+                <a href="#review-section" class="navbar-link" data-nav-link>Reviews</a>
+              </li>
+              <li>
+                <a href="#Sponsors" class="navbar-link" data-nav-link>Sponsors</a>
               </li>
 
             </ul>
           </nav>
-          <button class="btn btn-primary">Book Now</button>
+          <button id="book_now" class="btn btn-primary" onclick="scrollToAuth()"">Book Now</button>
         </div>
       </div>
     </header>
@@ -123,10 +118,6 @@
             <p class="hero-text">
               Find the best deals for your next adventure!
             </p>
-            <div class="btn-group">
-              <button class="btn btn-primary">Learn more</button>
-              <button class="btn btn-secondary" onclick="scrollToAuth()">Book now</button>
-            </div>
           </div>
         </section>
 
@@ -234,8 +225,6 @@
               </li>
         
             </ul>
-        
-            <button class="btn btn-primary">Explore More Destinations</button>
           </div>
         </section>
         
@@ -335,7 +324,7 @@
     </div>
     </div>
 
-    <div class="partners-container">
+    <div class="partners-container" id="Sponsors""">
       <h2 class="partners-heading">OUR OFFICIAL PARTNERS</h2>
       <div class="partners-images">
         <div class="partner-logo-container">
