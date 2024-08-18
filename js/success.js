@@ -10,6 +10,10 @@ document.addEventListener("DOMContentLoaded", () => {
         case 'Flight':
             confirmFlight(sessionId, productId);
             break;
+
+        case 'Reservation':
+            confirmReservation(sessionId, productId);
+            break;
     }
 
     const downloadBtn = document.getElementById('downloadBtn');
@@ -33,6 +37,32 @@ async function confirmFlight(sessionId, productId) {
     console.log(token);
     try {
         const response = await fetch('http://localhost:3000/api/flights/success', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'x-auth-token': token
+            },
+            body: JSON.stringify({ sessionId, productId })
+        });
+
+        const success = await response.json();
+        if (success) {
+            alert("Flight booked");
+        } else {
+            alert("Payment not successful, Try booking again");
+        }
+    } catch (err) {
+        alert("Error booking flight", err);
+        console.log(err);
+    }
+}
+
+
+async function confirmReservation(sessionId, productId) {
+    const token = localStorage.getItem('token');
+    console.log(token);
+    try {
+        const response = await fetch('http://localhost:3000/api/hotels/reserv/success', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
