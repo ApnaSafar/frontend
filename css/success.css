@@ -40,14 +40,7 @@ body {
     background: #333333;
 }
 
-.printer-bottom {
-    z-index: 0;
-    border: 6px solid #666666;
-    height: 6px;
-    border-top: 0;
-    border-radius: 0 0 6px 6px;
-    background: #333333;
-}
+
 
 .paper-container {
     position: relative;
@@ -62,40 +55,11 @@ body {
     z-index: 2;
     margin: 0 12px;
     margin-top: -12px;
-    animation: print 5000ms cubic-bezier(0.68, -0.55, 0.265, 0.9) infinite;
 }
 
 .main-contents {
     margin: 0 12px;
     padding: 24px;
-}
-
-.jagged-edge {
-    position: relative;
-    height: 20px;
-    width: 100%;
-    margin-top: -1px;
-}
-
-.jagged-edge:after {
-    content: "";
-    display: block;
-    position: absolute;
-    left: 0;
-    right: 0;
-    height: 20px;
-    background: linear-gradient(45deg,
-        transparent 33.333%,
-        #ffffff 33.333%,
-        #ffffff 66.667%,
-        transparent 66.667%),
-        linear-gradient(-45deg,
-        transparent 33.333%,
-        #ffffff 33.333%,
-        #ffffff 66.667%,
-        transparent 66.667%);
-    background-size: 16px 40px;
-    background-position: 0 -20px;
 }
 
 .success-icon {
@@ -161,46 +125,6 @@ body {
     }
 }
 
-.timer-container {
-    background-color: #ffffff;
-    border-radius: 10px;
-    padding: 20px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
-}
-
-.timer-container h2 {
-    font-size: 18px;
-    color: #333;
-    margin-bottom: 15px;
-    text-align: center;
-}
-
-#contain {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #f0f0f0;
-    border-radius: 10px;
-    padding: 10px;
-}
-
-.box {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 60px;
-    height: 60px;
-    background-color: #4CAF50;
-    border-radius: 5px;
-    margin: 0 5px;
-}
-
-#min, #sec, #two {
-    font-size: 24px;
-    color: #ffffff;
-    font-weight: bold;
-}
 
 .button-container {
     display: flex;

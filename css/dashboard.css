@@ -88,7 +88,7 @@
   }
   
   body { background: var(--white);
-    cursor: none; /* Hide the default cursor */
+    
    }
   
   
@@ -1389,15 +1389,4 @@ height: 150px; /* Increase the height here */
   width: 100%;
 }
 
-/* custom cursor */
-#cursor {
-  width: 24px;
-  height: 25px;
-  border-radius: 50%;
-  background-color: #0ef;
-  position: fixed; /* Changed from absolute to fixed */
-  pointer-events: none; /* Ensures the cursor doesn't interfere with other elements */
-  z-index: 9999; /* Ensures the cursor is always on top */
-  transition: all linear 0.1s;
-  mix-blend-mode: difference;
-}
+

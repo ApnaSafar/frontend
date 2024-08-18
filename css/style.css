@@ -81,7 +81,7 @@ html {
 }
 
 body { background: var(--white);
-  cursor: none; /* Hide the default cursor */
+  
 }
 
 
@@ -1222,15 +1222,3 @@ body { background: var(--white);
   transform: scale(1.1); /* Slightly enlarge the image on hover */
 }
 
-/* custom cursor */
-#cursor {
-  width: 24px;
-  height: 25px;
-  border-radius: 50%;
-  background-color: #0ef;
-  position: fixed; /* Changed from absolute to fixed */
-  pointer-events: none; /* Ensures the cursor doesn't interfere with other elements */
-  z-index: 9999; /* Ensures the cursor is always on top */
-  transition: all linear 0.1s;
-  mix-blend-mode: difference;
-}
