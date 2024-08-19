@@ -190,27 +190,49 @@ document.addEventListener('DOMContentLoaded', async () => {
       const response = await fetch('http://localhost:3000/api/review/reviews/');
       const reviews = await response.json();
   
-      // Create double the amount of reviews for seamless looping
-      const doubledReviews = [...reviews, ...reviews];
-  
-      doubledReviews.forEach(review => {
-        const card = document.createElement('div');
-        card.className = 'review-item';
-        card.innerHTML = `
-          <div class="name">${review.Name}:</div>
-          <div class="review">${review.Text}</div>
-        `;
-        container.appendChild(card);
-      });
-  
-      // Adjust animation duration based on the number of reviews
-      const marquee = document.querySelector('.marquee');
-      const reviewCount = reviews.length;
-      marquee.style.animationDuration = `${reviewCount * 5}s`; // 5 seconds per review
-    } catch (error) {
-      console.error('Error fetching reviews:', error);
+       // Function to create a review card
+    function createReviewCard(review) {
+      const card = document.createElement('div');
+      card.className = 'review-item';
+      card.innerHTML = `
+        <div class="name">${review.Name}:</div>
+        <div class="review">${review.Text}</div>
+      `;
+      return card;
     }
-  });
+  
+      // Add initial set of reviews
+    reviews.forEach(review => {
+      container.appendChild(createReviewCard(review));
+    });
 
+    // Calculate the total width of all reviews
+    const totalWidth = container.scrollWidth;
+
+    // Clone the reviews and append them to create a seamless loop
+    reviews.forEach(review => {
+      container.appendChild(createReviewCard(review));
+    });
+
+    // Set up the animation
+    container.style.animationDuration = `${reviews.length * 3}s`; // Adjust speed as needed
+    container.style.animationName = 'review-marquee';
+    container.style.animationTimingFunction = 'linear';
+    container.style.animationIterationCount = 'infinite';
+
+    // Define the keyframes for the animation
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes review-marquee {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(-${totalWidth}px); }
+      }
+    `;
+    document.head.appendChild(style);
+
+  } catch (error) {
+    console.error('Error fetching reviews:', error);
+  }
+});
 
   
