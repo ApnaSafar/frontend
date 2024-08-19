@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     const searchForm = document.getElementById('search-form');
 
-    fetchUserTickets();
+    //fetchUserTickets();
     fetchCities();
 
     searchForm.addEventListener('submit', handleSearch);
@@ -249,24 +249,34 @@ function displayUserTickets(tickets) {
     const ul = document.createElement('ul');
     tickets.forEach(ticket => {
         const li = document.createElement('li');
+        li.classList.add("ticket-item");
         li.innerHTML = `
-    <p>Flight: ${ticket.flight.flightNumber}</p>
-    <p>From: ${ticket.flight.from} To: ${ticket.flight.to}</p>
-    <p>Departure: ${new Date(ticket.flight.departureTime).toLocaleString()}</p>
-    <p>Seat: ${ticket.seatNumber}</p>
-    <p>Status: ${ticket.status}</p>
-    <button class="btn btn-secondary btn-cancel-ticket" data-ticket-id="${ticket._id}">Cancel Ticket</button>
-`;
+                  <div class="ticket-info">
+                      <h3 class="flight-number">Flight: ${ticket.flight.flightNumber}</h3>
+                      <p class="route">From: ${ticket.flight.from} To: ${ticket.flight.to}</p>
+                      <p class="departure">Departure: ${new Date(ticket.flight.departureTime).toLocaleString()}</p>
+                      <p class="seat">Seat: ${ticket.seatNumber}</p>
+                      <p class="status">Status: ${ticket.status}</p>
+                  </div>
+                  <div class="ticket-actions">
+                      <button class="btn btn-cancel" data-ticket-id=${ticket._id}>Cancel Ticket</button>
+                      <button class="btn btn-download" data-ticket-id=${ticket._id}>Download PDF</button>
+                  </div>`;
         ul.appendChild(li);
     });
 
     ticketsContainer.appendChild(ul);
-    // Add event listeners to the new "Cancel Ticket" buttons
-    document.querySelectorAll('.btn-cancel-ticket').forEach(button => {
+    document.querySelectorAll('.btn-cancel').forEach(button => {
         button.addEventListener('click', function (event) {
-            event.preventDefault();
             const ticketId = this.getAttribute('data-ticket-id');
             cancelTicket(ticketId);
+        });
+    });
+
+    document.querySelectorAll('.btn-download').forEach(button => {
+        button.addEventListener('click', function (event) {
+            const ticketId = this.getAttribute('data-ticket-id');
+            downloadTicket(ticketId);
         });
     });
 }
@@ -291,6 +301,154 @@ async function cancelTicket(ticketId) {
         if (response.ok) {
             alert('Ticket cancelled successfully');
             fetchUserTickets(); // Refresh the ticket list
+        } else {
+            alert(`Cancellation failed: ${data.message}`);
+        }
+    } catch (error) {
+        console.error('Cancellation error:', error);
+        alert('An error occurred during cancellation');
+    }
+}
+
+async function downloadTicket(ticketId) {
+    const token = localStorage.getItem('token');
+    if (!token) {
+        alert('Please log in to cancel a ticket');
+        return;
+    }
+
+    try {
+        const response = await fetch(`http://localhost:3000/api/tickets/downloadTicket/${ticketId}`, {
+            headers: {
+                'x-auth-token': token
+            }
+        })
+
+        const html = await response.text();
+
+        const element = document.createElement('div');
+        element.innerHTML = html;
+        document.body.appendChild(element);
+
+        html2pdf().from(element).save('document.pdf').then(() => {
+            document.body.removeChild(element);
+        });
+
+        // const downloadLink = document.createElement('a');
+        // const url = window.URL.createObjectURL(blob);
+        // downloadLink.href = url;
+        // downloadLink.download = `ticket_${ticketId}.pdf`;
+        // document.body.appendChild(downloadLink);
+        // downloadLink.click();
+
+        // document.body.removeChild(downloadLink);
+        // window.URL.revokeObjectURL(url);
+
+
+
+        // const data = await response.json();
+
+        // if (response.ok) {
+        //     alert('Ticket cancelled successfully');
+        //     fetchUserTickets(); // Refresh the ticket list
+        // } else {
+        //     alert(`Cancellation failed: ${data.message}`);
+        // }
+    } catch (error) {
+        console.error('Download error:', error);
+        alert('An error occurred during cancellation');
+    }
+}
+
+async function fetchUserReservation() {
+    const token = localStorage.getItem('token');
+    if (!token) {
+        alert('Please log in to view your tickets');
+        return;
+    }
+    try {
+        const response = await fetch('http://localhost:3000/api/hotels/reserv/user', {
+            headers: {
+                'x-auth-token': token
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const reservs = await response.json();
+        displayUserReservation(reservs);
+    } catch (error) {
+        console.error('Error fetching Reservation:', error);
+        alert('An error occurred while fetching your reservation' + error.message);
+    }
+}
+
+function displayUserReservation(reservs) {
+    const reservsContainer = document.getElementById('reserv-list');
+    reservsContainer.innerHTML = '';
+
+    if (reservs.length === 0) {
+        reservsContainer.innerHTML = '<p>No reservations found.</p>';
+        return;
+    }
+
+    const ul = document.createElement('ul');
+    reservs.forEach(reserv => {
+        const li = document.createElement('li');
+        li.classList.add("ticket-item");
+        li.innerHTML = `
+                  <div class="ticket-info">
+                      <h3 class="flight-number">Hotel: ${reserv.hotelName}</h3>
+                      <p class="route">Room Type: ${reserv.roomType}</p>
+                      <p class="departure">Check In: ${new Date(reserv.checkIn).toLocaleString()}</p>
+                      <p class="departure">Check In: ${new Date(reserv.checkOut).toLocaleString()}</p>
+                      <p class="status">Status: ${reserv.status}</p>
+                  </div>
+                  <div class="ticket-actions">
+                      <button class="btn btn-cancel btn-reserv-cancel" data-reserv-id=${reserv._id}>Cancel Ticket</button>
+                      <button class="btn btn-download btn-reserv-download" data-reserv-id=${reserv._id}>Download PDF</button>
+                  </div>`;
+        ul.appendChild(li);
+    });
+
+    reservsContainer.appendChild(ul);
+    document.querySelectorAll('.btn-reserv-cancel').forEach(button => {
+        button.addEventListener('click', function (event) {
+            const reservId = this.getAttribute('data-reserv-id');
+            cancelReservation(reservId);
+        });
+    });
+
+    document.querySelectorAll('.btn-reserv-download').forEach(button => {
+        button.addEventListener('click', function (event) {
+            const ticketId = this.getAttribute('data-ticket-id');
+            downloadTicket(ticketId);
+        });
+    });
+}
+
+async function cancelReservation(reservId) {
+    const token = localStorage.getItem('token');
+    if (!token) {
+        alert('Please log in to cancel a ticket');
+        return;
+    }
+
+    try {
+        const response = await fetch(`http://localhost:3000/api/hotels/reserv/cancel/${reservId}`, {
+            method: 'PUT',
+            headers: {
+                'x-auth-token': token
+            }
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+            alert('Reservation cancelled successfully');
+            fetchUserReservation(); // Refresh the ticket list
         } else {
             alert(`Cancellation failed: ${data.message}`);
         }
@@ -573,7 +731,7 @@ async function bookPackage(packageId) {
     } catch (error) {
         console.error('Booking error:', error);
         alert('An error occurred during booking: ' + error.message);
-    } 
+    }
 }
 
 async function fetchUserPackageBookings() {
@@ -636,7 +794,7 @@ function displayUserPackageBookings(bookings) {
 
     // Add event listeners for cancel buttons
     document.querySelectorAll('.cancel-booking-btn').forEach(button => {
-        button.addEventListener('click', function() {
+        button.addEventListener('click', function () {
             cancelPackageBooking(this.dataset.bookingId);
         });
     });
