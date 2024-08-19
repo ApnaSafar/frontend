@@ -448,7 +448,66 @@
   }
   
   /* search */
-  
+  .ticket-item {
+    background-color: #f5f5f5;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.ticket-info {
+    margin-bottom: 15px;
+}
+
+.flight-number {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.ticket-info p {
+    margin: 5px 0;
+    color: #333;
+}
+
+.status {
+    font-weight: bold;
+    color: #4CAF50;
+}
+
+.ticket-actions {
+    display: flex;
+    justify-content: space-between;
+}
+
+/* .btn {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: background-color 0.3s;
+} */
+
+.btn-cancel {
+    background-color: #f44336;
+    color: white;
+}
+
+.btn-cancel:hover {
+    background-color: #d32f2f;
+}
+
+.btn-download {
+    background-color: #2196F3;
+    color: white;
+}
+
+.btn-download:hover {
+    background-color: #1976D2;
+}
   
   .tour-search,
 .user-tickets {
