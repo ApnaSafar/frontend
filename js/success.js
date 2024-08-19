@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const goBackBtn = document.getElementById('goBackBtn');
     goBackBtn.addEventListener('click', () => {
-        window.location.href = 'http://localhost:3000/dashboard.html';
+        window.location.href = 'https://backend-5hoj.onrender.com/dashboard.html';
     });
 
     // Simulate fetching transaction ID
@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
 async function confirmPackageBooking(sessionId, productId) {
     const token = localStorage.getItem('token');
     try {
-        const response = await fetch('http://localhost:3000/api/packages/success-book', {
+        const response = await fetch('https://backend-5hoj.onrender.com/api/packages/success-book', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -74,7 +74,7 @@ async function confirmFlight(sessionId, productId) {
     const token = localStorage.getItem('token');
     console.log(token);
     try {
-        const response = await fetch('http://localhost:3000/api/flights/success', {
+        const response = await fetch('https://backend-5hoj.onrender.com/api/flights/success', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -100,7 +100,7 @@ async function confirmReservation(sessionId, productId) {
     const token = localStorage.getItem('token');
     console.log(token);
     try {
-        const response = await fetch('http://localhost:3000/api/hotels/reserv/success', {
+        const response = await fetch('https://backend-5hoj.onrender.com/api/hotels/reserv/success', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

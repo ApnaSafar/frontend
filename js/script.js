@@ -114,7 +114,7 @@ async function handleLogin(e) {
     const password = document.getElementById('login-password').value;
 
     try {
-        const response = await fetch('http://localhost:3000/api/auth/login', {
+        const response = await fetch('https://backend-5hoj.onrender.com/api/auth/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -147,7 +147,7 @@ async function handleSignup(e) {
     const password = document.getElementById('signup-password').value;
 
     try {
-        const response = await fetch('http://localhost:3000/api/auth/signup', {
+        const response = await fetch('https://backend-5hoj.onrender.com/api/auth/signup', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -187,7 +187,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const container = document.getElementById('reviews-container');
   
     try {
-      const response = await fetch('http://localhost:3000/api/review/reviews/');
+      const response = await fetch('https://backend-5hoj.onrender.com/api/review/reviews/');
       const reviews = await response.json();
   
        // Function to create a review card
