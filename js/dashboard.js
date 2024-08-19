@@ -333,27 +333,6 @@ async function downloadTicket(ticketId) {
         html2pdf().from(element).save('document.pdf').then(() => {
             document.body.removeChild(element);
         });
-
-        // const downloadLink = document.createElement('a');
-        // const url = window.URL.createObjectURL(blob);
-        // downloadLink.href = url;
-        // downloadLink.download = `ticket_${ticketId}.pdf`;
-        // document.body.appendChild(downloadLink);
-        // downloadLink.click();
-
-        // document.body.removeChild(downloadLink);
-        // window.URL.revokeObjectURL(url);
-
-
-
-        // const data = await response.json();
-
-        // if (response.ok) {
-        //     alert('Ticket cancelled successfully');
-        //     fetchUserTickets(); // Refresh the ticket list
-        // } else {
-        //     alert(`Cancellation failed: ${data.message}`);
-        // }
     } catch (error) {
         console.error('Download error:', error);
         alert('An error occurred during cancellation');
@@ -386,6 +365,7 @@ async function fetchUserReservation() {
 }
 
 function displayUserReservation(reservs) {
+    console.log(reservs)
     const reservsContainer = document.getElementById('reserv-list');
     reservsContainer.innerHTML = '';
 
@@ -396,6 +376,7 @@ function displayUserReservation(reservs) {
 
     const ul = document.createElement('ul');
     reservs.forEach(reserv => {
+        console.log(reserv._id)
         const li = document.createElement('li');
         li.classList.add("ticket-item");
         li.innerHTML = `
@@ -423,8 +404,8 @@ function displayUserReservation(reservs) {
 
     document.querySelectorAll('.btn-reserv-download').forEach(button => {
         button.addEventListener('click', function (event) {
-            const ticketId = this.getAttribute('data-ticket-id');
-            downloadTicket(ticketId);
+            const reservId = this.getAttribute('data-reserv-id');
+            downloadReservation(reservId);
         });
     });
 }
@@ -454,6 +435,36 @@ async function cancelReservation(reservId) {
         }
     } catch (error) {
         console.error('Cancellation error:', error);
+        alert('An error occurred during cancellation');
+    }
+}
+
+async function downloadReservation(reservId) {
+    console.log(reservId)
+    const token = localStorage.getItem('token');
+    if (!token) {
+        alert('Please log in to cancel a ticket');
+        return;
+    }
+
+    try {
+        const response = await fetch(`http://localhost:3000/api/hotels/reserv/download/${reservId}`, {
+            headers: {
+                'x-auth-token': token
+            }
+        })
+
+        const html = await response.text();
+
+        const element = document.createElement('div');
+        element.innerHTML = html;
+        document.body.appendChild(element);
+
+        html2pdf().from(element).save('document.pdf').then(() => {
+            document.body.removeChild(element);
+        });
+    } catch (error) {
+        console.error('Download error:', error);
         alert('An error occurred during cancellation');
     }
 }
