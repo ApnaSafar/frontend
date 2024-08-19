@@ -259,21 +259,21 @@ function displayUserTickets(tickets) {
                       <p class="status">Status: ${ticket.status}</p>
                   </div>
                   <div class="ticket-actions">
-                      <button class="btn btn-cancel" data-ticket-id=${ticket._id}>Cancel Ticket</button>
-                      <button class="btn btn-download" data-ticket-id=${ticket._id}>Download PDF</button>
+                      <button class="btn btn-cancel btn-ticket-cancel" data-ticket-id=${ticket._id}>Cancel Ticket</button>
+                      <button class="btn btn-download btn-ticket-download" data-ticket-id=${ticket._id}>Download PDF</button>
                   </div>`;
         ul.appendChild(li);
     });
 
     ticketsContainer.appendChild(ul);
-    document.querySelectorAll('.btn-cancel').forEach(button => {
+    document.querySelectorAll('.btn-ticket-cancel').forEach(button => {
         button.addEventListener('click', function (event) {
             const ticketId = this.getAttribute('data-ticket-id');
             cancelTicket(ticketId);
         });
     });
 
-    document.querySelectorAll('.btn-download').forEach(button => {
+    document.querySelectorAll('.btn-ticket-download').forEach(button => {
         button.addEventListener('click', function (event) {
             const ticketId = this.getAttribute('data-ticket-id');
             downloadTicket(ticketId);
