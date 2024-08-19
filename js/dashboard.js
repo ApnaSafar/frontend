@@ -94,7 +94,7 @@ document.addEventListener('DOMContentLoaded', () => {
 async function fetchCities() {
 
     try {
-        const response = await fetch('http://localhost:3000/api/cities');
+        const response = await fetch('https://backend-5hoj.onrender.com/api/cities');
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
@@ -133,7 +133,7 @@ async function handleSearch(e) {
         const [day, month, year] = date.split('-');
         const searchDate = `${year}-${month}-${day}`;
 
-        const response = await fetch(`http://localhost:3000/api/flights/search?from=${from}&to=${to}&date=${searchDate}`);
+        const response = await fetch(`https://backend-5hoj.onrender.com/api/flights/search?from=${from}&to=${to}&date=${searchDate}`);
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -183,7 +183,7 @@ async function bookFlight(flightId) {
     }
 
     try {
-        const response = await fetch('http://localhost:3000/api/flights/book', {
+        const response = await fetch('https://backend-5hoj.onrender.com/api/flights/book', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -219,7 +219,7 @@ async function fetchUserTickets() {
         return;
     }
     try {
-        const response = await fetch('http://localhost:3000/api/tickets/user', {
+        const response = await fetch('https://backend-5hoj.onrender.com/api/tickets/user', {
             headers: {
                 'x-auth-token': token
             }
@@ -289,7 +289,7 @@ async function cancelTicket(ticketId) {
     }
 
     try {
-        const response = await fetch(`http://localhost:3000/api/tickets/cancel/${ticketId}`, {
+        const response = await fetch(`https://backend-5hoj.onrender.com/api/tickets/cancel/${ticketId}`, {
             method: 'PUT',
             headers: {
                 'x-auth-token': token
@@ -318,7 +318,7 @@ async function downloadTicket(ticketId) {
     }
 
     try {
-        const response = await fetch(`http://localhost:3000/api/tickets/downloadTicket/${ticketId}`, {
+        const response = await fetch(`https://backend-5hoj.onrender.com/api/tickets/downloadTicket/${ticketId}`, {
             headers: {
                 'x-auth-token': token
             }
@@ -346,7 +346,7 @@ async function fetchUserReservation() {
         return;
     }
     try {
-        const response = await fetch('http://localhost:3000/api/hotels/reserv/user', {
+        const response = await fetch('https://backend-5hoj.onrender.com/api/hotels/reserv/user', {
             headers: {
                 'x-auth-token': token
             }
@@ -418,7 +418,7 @@ async function cancelReservation(reservId) {
     }
 
     try {
-        const response = await fetch(`http://localhost:3000/api/hotels/reserv/cancel/${reservId}`, {
+        const response = await fetch(`https://backend-5hoj.onrender.com/api/hotels/reserv/cancel/${reservId}`, {
             method: 'PUT',
             headers: {
                 'x-auth-token': token
@@ -448,7 +448,7 @@ async function downloadReservation(reservId) {
     }
 
     try {
-        const response = await fetch(`http://localhost:3000/api/hotels/reserv/download/${reservId}`, {
+        const response = await fetch(`https://backend-5hoj.onrender.com/api/hotels/reserv/download/${reservId}`, {
             headers: {
                 'x-auth-token': token
             }
@@ -483,7 +483,7 @@ async function sendReview(e) {
     const review = document.getElementById('review').value;
 
     try {
-        const response = await fetch('http://localhost:3000/api/review/add-review', {
+        const response = await fetch('https://backend-5hoj.onrender.com/api/review/add-review', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -516,7 +516,7 @@ async function sendReview(e) {
     const review = document.getElementById('review').value;
 
     try {
-        const response = await fetch('http://localhost:3000/api/review/add-review', {
+        const response = await fetch('https://backend-5hoj.onrender.com/api/review/add-review', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -548,7 +548,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 async function fetchHotels() {
     try {
-        const response = await fetch(`http://localhost:3000/api/hotels/`);
+        const response = await fetch(`https://backend-5hoj.onrender.com/api/hotels/`);
         const hotels = await response.json();
         return hotels;
     } catch (error) {
@@ -588,7 +588,7 @@ function scroll(direction) {
 // Function to fetch hotel details and open modal
 async function openModal(hotelId) {
     try {
-        const response = await fetch(`http://localhost:3000/api/hotels/${hotelId}`);
+        const response = await fetch(`https://backend-5hoj.onrender.com/api/hotels/${hotelId}`);
         currentHotel = await response.json();
         console.log(currentHotel);
 
@@ -649,7 +649,7 @@ async function bookNow() {
     }),)
 
     try {
-        const response = await fetch('http://localhost:3000/api/hotels/reserv/create', {
+        const response = await fetch('https://backend-5hoj.onrender.com/api/hotels/reserv/create', {
             method: 'POST',
             headers: {
                 'x-auth-token': token,
@@ -715,7 +715,7 @@ async function bookPackage(packageId) {
     }
 
     try {
-        const response = await fetch('http://localhost:3000/api/packages/book', {
+        const response = await fetch('https://backend-5hoj.onrender.com/api/packages/book', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -752,7 +752,7 @@ async function fetchUserPackageBookings() {
         return;
     }
     try {
-        const response = await fetch('http://localhost:3000/api/packages/user-bookings', {
+        const response = await fetch('https://backend-5hoj.onrender.com/api/packages/user-bookings', {
             headers: {
                 'x-auth-token': token
             }
@@ -819,7 +819,7 @@ async function cancelPackageBooking(bookingId) {
     }
 
     try {
-        const response = await fetch(`http://localhost:3000/api/packages/cancel/${bookingId}`, {
+        const response = await fetch(`https://backend-5hoj.onrender.com/api/packages/cancel/${bookingId}`, {
             method: 'PUT',
             headers: {
                 'x-auth-token': token
