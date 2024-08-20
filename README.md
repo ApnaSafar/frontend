@@ -9,47 +9,67 @@ Include screenshots here to visually showcase your project. Add relevant caption
 ![Screenshot 2024-08-20 142916](https://github.com/user-attachments/assets/d49f7dbd-b21c-47b3-824d-291424c79fc5)
 ![Screenshot 2024-08-20 143138](https://github.com/user-attachments/assets/bf7e4cfe-6d9d-42b1-bff9-78c2d81ee137)
 ![Screenshot 2024-08-20 145949](https://github.com/user-attachments/assets/6aa128c8-7d98-47ab-b414-da1d6e5d3530)
-
+![Screenshot 2024-08-20 175621](https://github.com/user-attachments/assets/48fa9c7f-d1d1-4bd4-95a5-5e93110fac56)
+![Screenshot 2024-08-20 175806](https://github.com/user-attachments/assets/d1cc7921-a7d9-4e5d-9040-2bdab39bd69c)
+![Screenshot 2024-08-20 175830](https://github.com/user-attachments/assets/6b7774ef-f854-47b3-a9f3-77d993a78eb2)
 
 ## Hosted URL :
 https://frontend-drab-zeta-69.vercel.app/
 
 Features Implemented
 ## Frontend
-### User Authentication: Login and registration system with email verification.
-### Responsive Design: User-friendly interface optimized for various devices.
-### Flight Booking Interface: Easy-to-navigate booking system for airplane tickets.
-### Hotel Booking Module: Integrated hotel booking option with available packages.
-### Destination Showcase: Display of popular travel destinations with detailed information.
-### Travel Packages: View and book combo deals for flights and hotels.
-### PDF Ticket Generation: Option to download booked tickets as PDFs.
-### Stripe Payment Integration: Secure and seamless payment processing using Stripe.
+### User Authentication: 
+Login and signup system with email verification.
+### Responsive Design: 
+User-friendly interface optimized for various devices.
+### Flight Booking Interface:
+Easy-to-navigate booking system for airplane tickets.
+### Hotel Booking Module: 
+Integrated hotel booking option with available packages.
+### Destination Showcase:
+Display of popular travel destinations with detailed information.
+### Travel Packages:
+View and book combo deals for flights and hotels.
+### PDF Ticket Generation: 
+Option to download booked tickets as PDFs.
+### Stripe Payment Integration:
+Secure and seamless payment processing using Stripe.
 ## Backend
-### User Data Management: Secure storage and management of user credentials and preferences in MongoDB.
-### Booking System: Backend logic for handling flight and hotel bookings.
-### Email Notifications: Automated email sending on user registration and booking confirmations.
-### Database Management: Storing booking information, user data, and package details in MongoDB.
-### PDF Generation: Server-side functionality for generating and delivering ticket PDFs.
-### API Integration: Communication between frontend and backend for seamless data flow and user interaction.
+### User Data Management:
+Secure storage and management of user credentials and preferences in MongoDB.
+### Booking System:
+Backend logic for handling flight and hotel bookings.
+### Email Notifications:
+Automated email sending on user registration 
+### Database Management:
+Storing booking information, user data, and package details in MongoDB.
+### PDF Generation:
+Server-side functionality for generating and delivering ticket PDFs.
+### API Integration: 
+Communication between frontend and backend for seamless data flow and user interaction.
 ### Technologies/Libraries/Packages Used
-### Stripe Payment Handling: Managing payment transactions, ensuring security and reliability using Stripe.
+### Stripe Payment Handling:
+Managing payment transactions, ensuring security and reliability using Stripe.
 ## List the technologies, libraries, and packages used in the project.
-## Frontend Technologies
-### HTML5
-### CSS3
-### JavaScript
-## Backend Technologies
-### Node.js
-### Express.js
-## Database
-### MongoDB
-## Payment Integration
-### Stripe
-## Other Technologies
-### Nodemailer
-### Mongoose
-### PDFKit
-## Local Setup
+### Frontend Technologies
+ HTML5
+ CSS3
+ JavaScript
+### Backend Technologies
+ Node.js
+ Express.js
+ ### Database
+ MongoDB
+### Payment Integration
+ Stripe
+### Other Technologies
+ Nodemailer
+ 
+ Mongoose
+ 
+ PDFKit
+ 
+Local Setup
 ### To set up this project locally, follow these steps:
 ### Navigate to the project directory of the backend :
 ### Clone the repository:
