@@ -5,8 +5,14 @@
 ## Screenshots
 Include screenshots here to visually showcase your project. Add relevant captions if necessary.
 
-## Hosted URL
-  https://frontend-drab-zeta-69.vercel.app/
+![Screenshot 2024-08-20 142847](https://github.com/user-attachments/assets/8f9a9703-1d69-479e-9753-224a25bd7000)
+![Screenshot 2024-08-20 142916](https://github.com/user-attachments/assets/d49f7dbd-b21c-47b3-824d-291424c79fc5)
+![Screenshot 2024-08-20 143138](https://github.com/user-attachments/assets/bf7e4cfe-6d9d-42b1-bff9-78c2d81ee137)
+![Screenshot 2024-08-20 145949](https://github.com/user-attachments/assets/6aa128c8-7d98-47ab-b414-da1d6e5d3530)
+
+
+## Hosted URL :
+https://frontend-drab-zeta-69.vercel.app/
 
 Features Implemented
 ## Frontend
