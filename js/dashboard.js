@@ -18,60 +18,112 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Navbar toggle functionality
     const overlay = document.querySelector("[data-overlay]");
-    const navOpenBtn = document.querySelector("[data-nav-open-btn]");
-    const navbar = document.querySelector("[data-navbar]");
-    const navCloseBtn = document.querySelector("[data-nav-close-btn]");
-    const navLinks = document.querySelectorAll("[data-nav-link]");
-    const heroTitle = document.querySelector(".hero-title");
-    const header = document.querySelector("[data-header]");
-    const headerTop = document.querySelector(".header-top");
-    const headerBottom = document.querySelector(".header-bottom");
-    const heroOverlay = document.querySelector(".hero::before");
+const navOpenBtn = document.querySelector("[data-nav-open-btn]");
+const navbar = document.querySelector("[data-navbar]");
+const navCloseBtn = document.querySelector("[data-nav-close-btn]");
+const navLinks = document.querySelectorAll("[data-nav-link]");
+const heroTitle = document.querySelector(".hero-title");
+const header = document.querySelector("[data-header]");
+const headerTop = document.querySelector(".header-top");
+const headerBottom = document.querySelector(".header-bottom");
+const heroOverlay = document.querySelector(".hero::before");
+const goTopBtn = document.querySelector("[data-go-top]");
 
     const navElemArr = [navOpenBtn, navCloseBtn, overlay];
 
-    const navToggleEvent = function (elem) {
-        for (let i = 0; i < elem.length; i++) {
-            elem[i].addEventListener("click", function () {
-                overlay.classList.toggle("active");
-                if (overlay.classList.contains("active")) {
-                    headerTop.style.display = "none";
-                    headerBottom.style.display = "none";
-                    heroTitle.style.display = "none";
-                    heroOverlay.style.backgroundColor = "rgba(0, 0, 0, 0.8)"; // Darker when overlay is active
-                } else {
-                    headerTop.style.display = "";
-                    headerBottom.style.display = "";
-                    heroTitle.style.display = "";
-                    heroOverlay.style.backgroundColor = "rgba(0, 0, 0, 0.5)"; // Back to original translucency
-                }
-            });
-        }
-    }
-
-    navToggleEvent(navElemArr);
-    navToggleEvent(navLinks);
-
-    // Header sticky and go-to-top functionality
-    const goTopBtn = document.querySelector("[data-go-top]");
-
-    window.addEventListener("scroll", function () {
-        if (window.scrollY >= 200) {
-            header.classList.add("active");
-            goTopBtn.classList.add("active");
-            heroTitle.style.opacity = "0";
-            if (!overlay.classList.contains("active")) {
-                headerTop.style.display = "none";
-            }
-        } else {
-            header.classList.remove("active");
-            goTopBtn.classList.remove("active");
-            heroTitle.style.opacity = "1";
-            if (!overlay.classList.contains("active")) {
-                headerTop.style.display = "";
-            }
-        }
+    // Navbar toggle functionality
+const navToggleEvent = (elems) => {
+    elems.forEach((elem) => {
+      elem.addEventListener("click", () => {
+        navbar.classList.toggle("active");
+        overlay.classList.toggle("active");
+      });
     });
+  };
+
+  navToggleEvent(navElemArr);
+  navToggleEvent(navLinks);
+  
+  // Header sticky and go-to-top functionality
+  window.addEventListener("scroll", () => {
+    if (window.scrollY >= 200) {
+      header.classList.add("active");
+      goTopBtn.classList.add("active");
+      heroTitle.style.opacity = "0";
+      if (!overlay.classList.contains("active")) {
+        headerTop.style.display = "none";
+      }
+    } else {
+      header.classList.remove("active");
+      goTopBtn.classList.remove("active");
+      heroTitle.style.opacity = "1";
+      if (!overlay.classList.contains("active")) {
+        headerTop.style.display = "";
+      }
+    }
+  });
+
+
+    // Search button and highlight text in the page
+const searchBtn = document.querySelector('.search-btn');
+let searchInput = null;
+
+searchBtn.addEventListener('click', function(e) {
+  e.stopPropagation();
+  if (!searchInput) {
+    searchInput = document.createElement('input');
+    searchInput.id = 'search-input';
+    searchInput.type = 'text';
+    searchInput.placeholder = 'Search...';
+    document.querySelector('.header-btn-group').appendChild(searchInput);
+  }
+
+  searchInput.style.display = searchInput.style.display === 'none' ? 'block' : 'none';
+  if (searchInput.style.display === 'block') {
+    searchInput.focus();
+  }
+});
+
+document.addEventListener('click', function(e) {
+  if (searchInput && searchInput.style.display === 'block' && 
+      e.target !== searchInput && e.target !== searchBtn) {
+    searchInput.style.display = 'none';
+  }
+});
+
+document.addEventListener('keyup', function(e) {
+  if (e.target.id === 'search-input') {
+    const searchTerm = e.target.value.toLowerCase();
+    removeHighlights();
+    if (searchTerm.length > 0) {
+      searchInPage(searchTerm);
+    }
+  }
+});
+
+function removeHighlights() {
+  const highlights = document.querySelectorAll('.highlight');
+  highlights.forEach(highlight => {
+    const parent = highlight.parentNode;
+    parent.replaceChild(document.createTextNode(highlight.textContent), highlight);
+    parent.normalize();
+  });
+}
+
+function searchInPage(searchTerm) {
+  const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null, false);
+  let node;
+  while (node = walker.nextNode()) {
+    const nodeValue = node.nodeValue.toLowerCase();
+    if (nodeValue.includes(searchTerm)) {
+      const regex = new RegExp(`(${searchTerm})`, 'gi');
+      const replacedContent = node.nodeValue.replace(regex, '<span class="highlight">$1</span>');
+      const wrapper = document.createElement('span');
+      wrapper.innerHTML = replacedContent;
+      node.parentNode.replaceChild(wrapper, node);
+    }
+  }
+}
 
     // Scroll down functionality
     const scrollDownBtn = document.querySelector('.scroll-down');

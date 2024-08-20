@@ -8,10 +8,7 @@
   <title>User Dashboard - Travel Ticket Booking</title>
   <!-- favicon -->
   <link rel="shortcut icon" href="./images/travel.svg" type="image/svg+xml" />
-
   <link rel="stylesheet" href="./css/dashboard.css" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
     href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Poppins:wght@400;500;600;700&display=swap"
     rel="stylesheet" />
@@ -70,7 +67,9 @@
 
         <nav id="main-navbar" class="navbar" data-navbar>
           <div class="navbar-top">
-
+            <a href="#" class="logo">
+              <img src="./images/logo.svg" alt="Apna logo" />
+            </a>
             <button class="nav-close-btn" aria-label="Close Menu" data-nav-close-btn>
               <ion-icon name="close-outline"></ion-icon>
             </button>
@@ -84,10 +83,19 @@
               <a href="#search" class="navbar-link" data-nav-link>Search Flights</a>
             </li>
             <li>
-              <a href="#login" class="navbar-link" data-nav-link>Login</a>
+              <a href="#user-tickets" class="navbar-link" data-nav-link>Tickets & Reservations</a>
             </li>
             <li>
-              <a href="#signup" class="navbar-link" data-nav-link>Sign Up</a>
+              <a href="#cardContainer" class="navbar-link" data-nav-link>Hotels</a>
+            </li>
+            <li>
+              <a href="#review-form" class="navbar-link" data-nav-link>Review</a>
+            </li>
+            <li>
+              <a href="#package" class="navbar-link" data-nav-link>Packages</a>
+            </li>
+            <li>
+              <a href="#footerg" class="navbar-link" data-nav-link>Contact Us</a>
             </li>
           </ul>
         </nav>
@@ -112,7 +120,7 @@
       <div class="content-wrapper"></div>
       <section class="tour-search" id="search">
         <div class="container">
-          <h2 class="h2 section-title">Search for Tickets</h2>
+          <h2 class="h2 section-title">Search for Flights</h2>
           <form action="" class="tour-search-form" id="search-form">
             <div class="input-wrapper">
               <label for="from" class="input-label">From</label>
@@ -145,7 +153,7 @@
         <div class="container">
           <h2 class="h2 section-title">Your Tickets</h2>
           <center>
-            <button onclick="fetchUserTickets()" class="btn btn-tertiary">View My Reservations</button>
+            <button onclick="fetchUserTickets()" class="btn btn-tertiary">View My Tickets</button>
             <div id="ticket-list">
               <ul>
                 
@@ -164,28 +172,6 @@
           </center>
         </div>
       </section>
-
-      <!-- <section class="tickets-and-reservations" id="tickets-and-reservations">
-        <div class="container">
-          <h2 class="h2 section-title">Your Travel Details</h2>
-          <div class="travel-details-container">
-            <div class="travel-item flight-ticket">
-              <h3 class="h3">Flight to Barcelona</h3>
-              <p>Date: September 15, 2024</p>
-              <p>Departure: New York (JFK) - 9:30 PM</p>
-              <p>Arrival: Barcelona (BCN) - 11:00 AM</p>
-              <button class="btn btn-tertiary" onclick="downloadPDF('flight')">Download PDF</button>
-            </div>
-            <div class="travel-item hotel-reservation">
-              <h3 class="h3">Sunset Beach Resort</h3>
-              <p>Check-in: September 16, 2024</p>
-              <p>Check-out: September 23, 2024</p>
-              <p>Room Type: Ocean View Suite</p>
-              <button class="btn btn-tertiary" onclick="downloadPDF('hotel')">Download PDF</button>
-            </div>
-          </div>
-        </div>
-      </section> -->
 
       <section class="hotel-booking">
         <h2>Featured Hotels</h2>
@@ -536,20 +522,20 @@
       const body = 'Hello,\n\nI have a query regarding your travel ticket booking platform.\n\nThank you,\n[Your Name]';
       const mailtoLink = `mailto:${recipient}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 
-      // Check if the user is on a mobile device
+      // check ifuser is on mobile
       const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
       if (isMobile) {
-        // For mobile devices, use mailto link directly (opens in the default email app)
+        // for mobile , use app
         window.location.href = mailtoLink;
       } else {
-        // For desktop, try opening Gmail in a new tab or window
+        // for pc/laptop,open gmail in a new tab 
         const gmailLink = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(recipient)}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 
-        // Try to open Gmail, if not supported, fallback to mailto link
+        // if not supported, fallback to mailto link
         const gmailWindow = window.open(gmailLink, '_blank');
         if (!gmailWindow || gmailWindow.closed || typeof gmailWindow.closed == 'undefined') {
-          // Fallback to mailto if Gmail doesn't open
+
           window.location.href = mailtoLink;
         }
       }
