@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const goBackBtn = document.getElementById('goBackBtn');
     goBackBtn.addEventListener('click', () => {
-        window.location.href = 'https://backend-5hoj.onrender.com/dashboard.html';
+        window.location.href = './dashboard.html';
     });
 
     // Simulate fetching transaction ID
