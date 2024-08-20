@@ -3,8 +3,7 @@
 ### Apna Safar is a comprehensive travel booking platform that allows users to book airplane tickets and hotels after logging in. It features destination exploration, travel packages, and email notifications on registration. All data is stored in MongoDB, with the frontend built using HTML, CSS, and JavaScript, and Node.js for the backend, including PDF generation for downloadable tickets.
 
 ## Screenshots
-Include screenshots here to visually showcase your project. Add relevant captions if necessary.
-
+Included screenshots here to visually showcase our project.
 ![Screenshot 2024-08-20 142847](https://github.com/user-attachments/assets/8f9a9703-1d69-479e-9753-224a25bd7000)
 ![Screenshot 2024-08-20 142916](https://github.com/user-attachments/assets/d49f7dbd-b21c-47b3-824d-291424c79fc5)
 ![Screenshot 2024-08-20 143138](https://github.com/user-attachments/assets/bf7e4cfe-6d9d-42b1-bff9-78c2d81ee137)
