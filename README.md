@@ -51,18 +51,21 @@ Features Implemented
 ### PDFKit
 ## Local Setup
 ### To set up this project locally, follow these steps:
+## Navigate to the project directory of the backend :
 ### Clone the repository:
 ### Copy code:
-git clone https://github.com/yourusername/yourproject.git
-## Navigate to the project directory of the backend :
+git clone https://github.com/ApnaSafar/backend.git
 ### Install dependencies:
 npm install 
 ### Start the development server:
 nodemon server.js
 ## Now Navigate to the frontend directory :
+### Clone the repository:
+### Copy code:
+git clone https://github.com/ApnaSafar/frontend.git
 ### Open index.html 
 ### Go To Live Server
 ## Team Members
-### Prasanna -2023IMT-059
-### Taksh- 2023IMT-083
-### Prasun -2023IMT-060
+### Prasanna Mishra -2023IMT-059
+### Taksh Patel- 2023IMT-083
+### Prasun Baranwal-2023IMT-060
